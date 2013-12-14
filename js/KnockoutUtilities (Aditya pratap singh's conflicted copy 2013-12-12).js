@@ -27,9 +27,18 @@ function (
 					// Add text to element
 					$(element).html(value.htmlContent);
 					// Add title to element
-					$(element).attr('title', ('Go to ' + value.title))
+					$(element).attr('title', value.label)
 				}
 			}
+		};
+
+		/// <summary> Extend observable array for merging 2 observable arrays</summary>
+		ko.observableArray.fn['pushAll'] = function (valuesToPush) {
+			var underlyingArray = this();
+			this.valueWillMutate();
+			ko.utils.arrayPushAll(underlyingArray, valuesToPush);
+			this.valueHasMutated();
+			return this;  //optional
 		};
 
 	    /// <summary> Prevent bubble up of events </summary>
@@ -45,12 +54,13 @@ function (
 		    }
 		};
 
-	    // <summary> Disable click for elements </summary>
+	    /// <summary > Disable click on anchors </summary>
 		ko.bindingHandlers['disableClick'] = {
 		    init: function (element, valueAccessor) {
 		        $(element).click(function (evt) {
 		            if (valueAccessor())
 		                evt.preventDefault();
+		                evt.stopImmediatePropagation();
 		        });
 
 		    },
@@ -136,7 +146,7 @@ function (
 		    }
 		};
 
-	    // <summary> Add text as well as label to element </summary>
+	    // <summary> Add text as well as title to element </summary>
 		ko.bindingHandlers['textAndTitle'] = {
 		    update: function (element, valueAccessor) {
 		        var value = ko.unwrap(valueAccessor());
@@ -152,55 +162,9 @@ function (
 
 	    //#endregion
 
-	    //#region Custom observable extenders, utils and fn
-
-	    // <summary> Log change in value of observable to console </summary>
-		ko.extenders['logChange'] = function (target, option) {
-		    target.subscribe(function (newValue) {
-		        console.log(option + ": " + newValue);
-		    });
-
-		    return target;
-		};
-
-	    // <summary> Notify changed observable value always  </summary>
-		ko.extenders['notify'] = function (target, notifyWhen) {
-		    target["equalityComparer"] = notifyWhen == "always"
-				? function () { return false } // Treat all values as not equal
-				: ko.observable["fn"]["equalityComparer"];
-		    return target;
-		};
-
-	    // <summary> Extend observable arrays to provide sorting </summary>
-		ko.observableArray.fn['sortByColumn'] = function (column, order) {
-
-		    // If order to be sorted is ascending
-		    if (!!order && order.toLowerCase() === 'asc') {
-		        this.sort(function (left, right) {
-		            return left[column] === right[column] ? 0 : left[column] > right[column] ? -1 : 1;
-		        });
-		    } else {
-		        this.sort(function (left, right) {
-		            return left[column] === right[column] ? 0 : left[column] < right[column] ? -1 : 1;
-		        });
-		    }
-		}
-
-	    /// <summary> Extend observable array for merging 2 observable arrays</summary>
-		ko.observableArray.fn['pushAll'] = function (valuesToPush) {
-		    var underlyingArray = this();
-		    this.valueWillMutate();
-		    ko.utils.arrayPushAll(underlyingArray, valuesToPush);
-		    this.valueHasMutated();
-		    return this;  //optional
-		};
-
-	    //#endregion
-
 		return this;
 	};
 
-	var koUtilities = new KnockoutUtilities();
+	return new KnockoutUtilities();
 
-	return koUtilities;
 });
