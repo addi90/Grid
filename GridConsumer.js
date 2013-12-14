@@ -276,77 +276,63 @@ function (
 
 		var pagerConfig1 = [
 			{
-				 key: 'FirstPage',
-				 value: { htmlContent: '&laquo;', title: 'first', value: 1 },
-				 format: 'button'
-			 },
-			{
-				key: 'PreviousPage',
-				value: { htmlContent: '&lt;', title: 'previous', value: null },
-				format: 'button'
+			    key: 'FirstPage',
+			    value: { htmlContent: '&laquo;', title: 'first', value: 1 }
 			},
 			{
-				key: 'PageNumbers',
-				value: [],
-				format: 'button'
+			    key: 'PreviousPage',
+			    value: { htmlContent: '&lt;', title: 'previous', value: null }
 			},
 			{
-				key: 'NextPage',
-				value: { htmlContent: '&gt;', title: 'next', value: null },
-				format: 'button'
+			    key: 'PageNumbers',
+			    value: []
 			},
 			{
-				key: 'LastPage',
-				value: { htmlContent: '&raquo;', title: 'last', value: null },
-				format: 'button'
+			    key: 'NextPage',
+			    value: { htmlContent: '&gt;', title: 'next', value: null }
 			},
 			{
-				key: 'Text',
-				value: 'Page Size',
-				format: 'string'
+			    key: 'LastPage',
+			    value: { htmlContent: '&raquo;', title: 'last', value: null }
 			},
 			{
-				key: 'PageSizeOptions',
-				value: {
-					options: [1,2, 5, 10, 20, 30, 50],
-					selectedValue: 10
-				},
-				format: 'dropdown'
+			    key: 'Text',
+			    value: 'Page Size'
 			},
 			{
-				key: 'Text',
-				value: 'Showing page',
-				format: 'string'
+			    key: 'PageSizeOptions',
+			    value: {
+			        options: [1, 2, 5, 10, 20, 30, 50],
+			        selectedValue: 10
+			    }
 			},
 			{
-				key: 'CurrentPage',
-				value: 1,
-				format: 'textbox'
+			    key: 'Text',
+			    value: 'Showing page'
 			},
 			{
-				key: 'Text',
-				value: 'of',
-				format: 'string'
+			    key: 'CurrentPage',
+			    value: 1
 			},
 			{
-				key: 'TotalPages',
-				value: 30,
-				format: 'number'
+			    key: 'Text',
+			    value: 'of'
 			},
 			{
-				key: 'Text',
-				value: 'for',
-				format: 'string'
+			    key: 'TotalPages',
+			    value: 0
 			},
 			{
-				key: 'TotalRecords',
-				value: table1.aResponseData().length,
-				format: 'number'
+			    key: 'Text',
+			    value: 'for'
 			},
 			{
-				key: 'Text',
-				value: 'records',
-				format: 'string'
+			    key: 'TotalRecords',
+			    value: table1.aResponseData().length
+			},
+			{
+			    key: 'Text',
+			    value: 'records'
 			}
 		];
 
@@ -355,7 +341,7 @@ function (
 			data: table1
 		}).render($("#example"));
 
-		// <summary> Render grid pager </summary>
+		// <summary> Call grid pager constructor </summary>
 		var pager = new gridPager({
 			config: pagerConfig1,
 			pagerTemplate: 'basicTemplate'
@@ -363,11 +349,11 @@ function (
 
 		var pagerConfig1 = pager.oPagerConfig;
 
-		// Slice grid data based on pager configurations
+		// Slice grid data based on initial pager configurations
 		var paginatedData = utilities.slicePageData(table1.aResponseData(), pagerConfig1.CurrentPage(), pagerConfig1.PageSize());
 		table1.data(paginatedData);
 
-		// <summary> Override event handler </summary>
+		// <summary> Override event handler and slice data on change </summary>
 		var originalOnChange1 = pager.onChange;
 		pager.onChange = function () {
 			var paginatedData = utilities.slicePageData(table1.aResponseData(), pagerConfig1.CurrentPage(), pagerConfig1.PageSize())
@@ -375,7 +361,7 @@ function (
 			originalOnChange1()
 		}
 
-		// <summary> Render paginated grid for first time  <summary>
+		// <summary> Render pager for the grid  <summary>
 		pager.render($("#pager1"));
 
 		//#endregion
@@ -629,93 +615,79 @@ function (
 		}).render($("#example2"));
 
 		var pagerConfig = [
-			
 			{
 			    key: 'FirstPage',
-			    value: { htmlContent: '&laquo;', title: 'first', value: 1 },
-			    format: 'button'
+			    value: { htmlContent: '&laquo;', title: 'first', value: 1 }
 			},
 			{
 			    key: 'PreviousPage',
-			    value: { htmlContent: '&lt;', title: 'previous', value: null },
-			    format: 'button'
+			    value: { htmlContent: '&lt;', title: 'previous', value: null }
 			},
 			{
 			    key: 'PageNumbers',
-			    value: [],
-			    format: 'button'
+			    value: []
 			},
 			{
 			    key: 'NextPage',
-			    value: { htmlContent: '&gt;', title: 'next', value: null },
-			    format: 'button'
+			    value: { htmlContent: '&gt;', title: 'next', value: null }
 			},
 			{
 			    key: 'LastPage',
-			    value: { htmlContent: '&raquo;', title: 'last', value: null },
-			    format: 'button'
+			    value: { htmlContent: '&raquo;', title: 'last', value: null }
 			},
 			{
 			    key: 'Text',
-			    value: 'Page Size',
-			    format: 'string'
+			    value: 'Page Size'
 			},
 			{
 			    key: 'PageSizeOptions',
 			    value: {
 			        options: [1, 2, 5, 10, 20, 30, 50],
 			        selectedValue: 10
-			    },
-			    format: 'dropdown'
+			    }
 			},
 			{
 			    key: 'Text',
-			    value: 'Showing page',
-			    format: 'string'
+			    value: 'Showing page'
 			},
 			{
 			    key: 'CurrentPage',
-			    value: 1,
-			    format: 'textbox'
+			    value: 1
 			},
 			{
 			    key: 'Text',
-			    value: 'of',
-			    format: 'string'
+			    value: 'of'
 			},
 			{
 			    key: 'TotalPages',
-			    value: 30,
-			    format: 'number'
+			    value: 0
 			},
 			{
 			    key: 'Text',
-			    value: 'for',
-			    format: 'string'
+			    value: 'for'
 			},
 			{
 			    key: 'TotalRecords',
-			    value: table2.aResponseData().length,
-			    format: 'number'
+			    value: table2.aResponseData().length
 			},
 			{
 			    key: 'Text',
-			    value: 'records',
-			    format: 'string'
+			    value: 'records'
 			}
 		];
 
-		// <summary> Render grid pager </summary>
+	    // <summary> Call grid pager constructor </summary>
 		var pager2 = new gridPager({
 			config: pagerConfig
 		});
 
 		var pagerConfig2 = pager2.oPagerConfig;
 
+	    // Slice grid data based on initial pager configurations
 		var paginatedData = utilities.slicePageData(table2.aResponseData(), pagerConfig2.CurrentPage(), pagerConfig2.PageSize());
 		table2.data(paginatedData);
 
-		// <summary> Override event handler </summary>
+	    // <summary> Override event handler and slice data on change </summary>
 		var originalOnChange = pager2.onChange;
 		pager2.onChange = function () {
 			var paginatedData = utilities.slicePageData(table2.aResponseData(), pagerConfig2.CurrentPage(), pagerConfig2.PageSize())
@@ -723,7 +695,7 @@ function (
 			originalOnChange()
 		}
 
-		// <summary> Render paginated grid for first time  <summary>
+		// <summary> Render pager for the grid  <summary>
 		pager2.render($("#pager2"));
 
 		//#endregion
