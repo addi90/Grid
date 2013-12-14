@@ -83,7 +83,7 @@ function (
 	* @returns: Pager function for grid pagers
 	* <summary> Implementation for grid pager </summary>
 	*/
-	function GridPager(configOptions) {
+	function GridPager(pagerConfig) {
 
 		var gridPager = this;
 
@@ -217,7 +217,7 @@ function (
 			return linksSimpleArray;
 		});
 
-		// <summary> get current page value </summary>
+		/// <summary> get current page value </summary>
 		gridPager.getCurrentPage = function () {
 			var currentPage = gridPager.oPagerConfig.CurrentPage();
 			if (utilities.isNumber(currentPage)) {
@@ -251,7 +251,7 @@ function (
 			}
 		});
 
-		// <summary> Set current page  </summary>
+		/// <summary> Set current page  </summary>
 		gridPager.setCurrentPage = function (oPage) {
 			if (utilities.isNumber(parseInt(oPage.value, 10))) {
 				gridPager.oPagerConfig.CurrentPage(oPage.value);
@@ -260,7 +260,7 @@ function (
 			}
 		};
 
-		// <summary> Disable links  </summary>
+		/// <summary> Disable links  </summary>
 		gridPager.oDisabledLinks = {
 			FirstAndPrev: ko.computed(function () {
 				// Get current page number
@@ -294,13 +294,13 @@ function (
 
 		//#region Html generating methods
 
-		// <summary> Generate  html for text content </summary>
+		/// <summary> Generate  html for text content </summary>
 		var _getTextHTML = function (value) {
 			var strTemplate = "<span class='pager-text' >{inputValue}</span>"
 			return strTemplate.replace('{inputValue}', value);
 		}
 
-		// <summary> Generate  html for dropdown content </summary>
+		/// <summary> Generate  html for dropdown content </summary>
 		var _getDropDownHTML = function (value) {
 			var dropDownTemplate = "<select class='pager-dropdown' data-bind='options: oPagerConfig.PageOptions, " +
 																			"value: oPagerConfig.PageSize, " +
@@ -311,7 +311,7 @@ function (
 			return dropDownTemplate;
 		}
 
-		// <summary> Generate  html for textbox content </summary>
+		/// <summary> Generate  html for textbox content </summary>
 		var _getTextBoxHTML = function (value) {
 			var textboxTemplate = "<input class='pager-textbox' type='text' data-bind='value: oPagerConfig.CurrentPage," +
 																			"event: { blur: handleChange.bind($data, oPagerConfig.CurrentPageObject()) }'></input>";
@@ -321,7 +321,7 @@ function (
 			return textboxTemplate;
 		}
 
-		// <summary> Generate  html for total records</summary>
+		/// <summary> Generate  html for total records</summary>
 		var _getTotalRecordsHTML = function (value) {
 			var totalRecordsTemplate = "<span class='pager-text' data-bind='text: oPagerConfig.TotalRecords'></span>";
 
@@ -329,14 +329,14 @@ function (
 			return totalRecordsTemplate;
 		}
 
-		// <summary> Generate  html for total pages</summary>
+		/// <summary> Generate  html for total pages</summary>
 		var _getTotalPagesHTML = function (value) {
 			var totalPagesTemplate = "<span class='pager-text' data-bind='text: oPagerConfig.TotalPages'></span>";
 
 			return totalPagesTemplate;
 		}
 
-		// <summary> Generate  html for navigating to next pages (...)</summary>
+		/// <summary> Generate  html for navigating to next pages (...)</summary>
 		var _getNextPagesLink = function (value) {
 			var nextPageslink =
 					"<li>" +
@@ -348,7 +348,7 @@ function (
 			return nextPageslink;
 		}
 
-		// <summary> Generate  html for navigating to previous pages (...)</summary>
+		/// <summary> Generate  html for navigating to previous pages (...)</summary>
 		var _getPreviousPagesLink = function (value) {
 			var previousPageslink =
 					"<li>" +
@@ -360,7 +360,7 @@ function (
 			return previousPageslink;
 		}
 
-		// <summary> Generate  html for page number links</summary
+		/// <summary> Generate  html for page number links</summary
 		var _getPagesLinkHTML = function () {
 			var pageLinkTemplate =
 					//"<!-- ko foreach: oPagerConfig.CurrentPages -->" +
@@ -380,13 +380,13 @@ function (
 			return pageLinkTemplate;
 		}
 
-		// <summary> Get placeholder for page number links </summary>
+		/// <summary> Get placeholder for page number links </summary>
 		var _getPageLinksPlaceHolderHTML = function () {
 			var pageLinksPlaceHolderHTML = "{pagerLinksPlaceHolder}"
 			return pageLinksPlaceHolderHTML;
 		}
 
-		// <summary> Generate  html for first page </summary>
+		/// <summary> Generate  html for first page </summary>
 		var _getFirstLinkHTML = function (value) {
 			var firstLinkTemplate =
 				"<li>" +
@@ -400,7 +400,7 @@ function (
 			return firstLinkTemplate;
 		}
 
-		// <summary> Generate  html for previous page </summary>
+		/// <summary> Generate  html for previous page </summary>
 		var _getPreviousLinkHTML = function (value) {
 			var previousLinkTemplate =
 						"<li >" +
@@ -412,7 +412,7 @@ function (
 			return previousLinkTemplate;
 		}
 
-		// <summary> Generate  html for next page </summary>
+		/// <summary> Generate  html for next page </summary>
 		var _getNextLinkHTML = function (value) {
 			var nextLinkTemplate =
 						"<li>" +
@@ -424,7 +424,7 @@ function (
 			return nextLinkTemplate;
 		}
 
-		// <summary> Generate  html for first page </summary>
+		/// <summary> Generate  html for first page </summary>
 		var _getLastLinkHTML = function (value) {
 			var lastLinkTemplate =
 						"<li>" +
@@ -435,8 +435,8 @@ function (
 			return lastLinkTemplate;
 		}
 
-		// <summary> Hash to map Function and Placeholder used to generate HTML </summary>
-		gridPager.placeHolderFunction = {
+		/// <summary> Hash to map Function and Placeholder used to generate HTML </summary>
+		var _placeHolder = {
 			"Text": _getTextHTML,
 			"PageNumbers": _getPageLinksPlaceHolderHTML,
 			"FirstPage": _getFirstLinkHTML,
@@ -455,7 +455,7 @@ function (
 
 		//#region Event handlers
 
-		// <summary> Handle Next pages click </summary>
+		/// <summary> Handle Next pages click </summary>
 		gridPager.getNextPages = function (endPageIndex, numberOfLinks) {
 			var config = gridPager.oPagerConfig;
 
@@ -479,7 +479,7 @@ function (
 			gridPager.onChange();
 		};
 
-		// <summary> Handle Previous pages click </summary>
+		/// <summary> Handle Previous pages click </summary>
 		gridPager.getPreviousPages = function (startPageIndex, numberOfLinks) {
 			// Set end page index
 			gridPager.EndPage.index(startPageIndex - 1);
@@ -502,7 +502,7 @@ function (
 			gridPager.onChange();
 		};
 
-		// <summary> Handle page click </summary
+		/// <summary> Handle page click </summary
 		gridPager.handleChange = function (oCurrentPage) {
 			var currentConfiguration = gridPager.oPagerConfig,
 				currentPageLabel,
@@ -578,7 +578,7 @@ function (
 			gridPager.onChange();
 		};
 
-		// <summary> Handle drop down change </summary
+		/// <summary> Handle drop down change </summary
 		gridPager.handleDropDownChange = function () {
 			// Reset page number to first page
 			gridPager.setCurrentPage(gridPager.oPagerConfig.FirstPage);
@@ -592,7 +592,7 @@ function (
 			gridPager.onChange();
 		}
 
-		// <summary> Event for page click </summary
+		/// <summary> Event for page click </summary
 		gridPager.onChange = function () {
 		};
 
@@ -601,16 +601,16 @@ function (
 		//#region Objects
 
 		// Check if default configuration is to be overriden with consumer values
-		var pagerConfigurationOptions = !!configOptions && !!configOptions.config ? configOptions.config : oDefaultPagerConfig;
+		var pagerConfigurationOptions = !!pagerConfig && !!pagerConfig.config ? pagerConfig.config : oDefaultPagerConfig;
 		var pagerTemplate = '';
 		var pagerHtmlTemplate =
-			"<section>" +
+			"<section class='grid-pager'>" +
 			   "{pagerTemplatePlaceHolder}" +
 			"</section>"
 
 		// Iterate through the pager config and generate corresponding HTML
 		ko.utils.arrayForEach(pagerConfigurationOptions, function (currentConfig) {
-			pagerTemplate += gridPager.placeHolderFunction[currentConfig.key](currentConfig.value);
+			pagerTemplate += _placeHolder[currentConfig.key](currentConfig.value);
 		});
 
 		pagerHtmlTemplate = pagerHtmlTemplate.replace('{pagerTemplatePlaceHolder}', pagerTemplate);

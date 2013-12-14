@@ -109,7 +109,7 @@ function(
 		* @returns: Return true if input is string else false
 		*/
 		self.isString = function (oInputValue) {
-		    return (typeof oInputValue === 'string' || oInputValue instanceof String);
+			return (typeof oInputValue === 'string' || oInputValue instanceof String);
 		};
 			
 		/** 
@@ -411,7 +411,7 @@ function(
 		};
 
 
-		////TODO: Add functions for:
+		///TODO: Add functions for:
 		// 1. Format number, date and currenncies
 		// 2. Walk through an array and call filter or modify methods
 		// 3. Remove CRLF
@@ -530,20 +530,85 @@ function(
 			return ((sValue + "").indexOf("-") === 0);
 		};
 
-
-	    /** 
+		/** 
 		* Slice input array based on page size and current page
 		* @param: aData, iCurrentPage, iPageSize
 		* @returns: sliced array
 		*/
 		self.slicePageData = function (aData, iCurrentPage, iPageSize) {
-		    var startIndex = 0,
+			var startIndex = 0,
 				endIndex = 0;
 
-		    startIndex = ((iCurrentPage - 1) * iPageSize);
-		    endIndex = iCurrentPage * iPageSize;
+			startIndex = ((iCurrentPage - 1) * iPageSize);
+			endIndex = iCurrentPage * iPageSize;
 
-		    return aData.slice(startIndex, endIndex);
+			return aData.slice(startIndex, endIndex);
+		}
+
+		/**
+		* Create table using basic jquery 
+		* @param tableConfiguration
+		* @returns HTML for table
+		*/
+		self.generateTable = function (tableConfiguration) {
+
+			var tableHeader = tableConfiguration.header;
+			var tableContent = tableConfiguration.content;
+			var tableParentContainer = tableConfiguration.parentContainer;
+
+			// creates a <table> element 
+			var tbl = $('<table></table>').appendTo(tableParentContainer);
+
+			//#region Create Table header
+
+			var tblHead = $('<thead></thead>');
+			var columnHeaderRow = $('<tr></tr>');
+
+			for (var index = 0; index < tableHeader.length; index++) {
+				// create td for each column and bind the text
+				var currentColumn = tableHeader[index];
+
+				var columnHeaderCell = $('<th></th>').
+											text(currentColumn.label)
+											.attr({ 'id': currentColumn.id, 'class': currentColumn.spanWidth })
+											.css({ 'cursorPointer': currentColumn.sortable });
+
+				columnHeaderCell.appendTo(columnHeaderRow);
+			}
+
+			//Append row to header
+			columnHeaderRow.appendTo(tblHead);
+
+			//#endregion
+
+			//#region Create Table body
+
+			var tblBody = $('<tbody></tbody>');
+
+			for (var rowIndex = 0; rowIndex < tableContent.length; rowIndex++) {
+				var currentDataRow = tableContent[rowIndex];
+
+				// create a data row
+				var dataRow = $('<tr></tr>');
+
+				// create cell content for the row and append to row
+				for (var cell in currentDataRow) {
+					var cellData = $('<td></td>').text(currentDataRow[cell]);
+
+					cellData.appendTo(dataRow);
+				}
+
+				// add the row to the end of the table body
+				dataRow.appendTo(tblBody);
+			}
+
+			//#endregion
+
+			// Append header to table
+			tblHead.appendTo(tbl);
+
+			// Append body to table
+			tblBody.appendTo(tbl);
 		}
 
 		//#endregion methods
@@ -551,7 +616,7 @@ function(
 		return this;
 	};
 	
-	// <summary> Instantiate viewModel </summary>
+	/// <summary> Instantiate viewModel </summary>
 	var vm = new viewModel();
 	
 	return vm;

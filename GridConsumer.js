@@ -29,246 +29,84 @@ function (
 
 		//#region Table1
 
-		// <summary> Assign grid properties and data </summary>
+		/// <summary> Assign grid properties and data </summary>
 		var table1 = {
 			caption: "new table caption",
 			isExpanded: ko.observable(true),
-			sortColumn: ko.observable('C1'),
+			sortColumn: ko.observable('C0'),
 			sortOrder: ko.observable('asc'),
-			aColModel: [
-				{ label: 'Inv No', id: 'C1', spanWidth: 'span2', sortable: true },
-				{ label: 'Date', id: 'C2', spanWidth: 'span2', sortable: true },
-				{ label: 'Client', id: 'C3', spanWidth: 'span4', sortable: true },
-				{ label: 'Amount', id: 'C4', spanWidth: 'span2', sortable: false },
-				{ label: 'Tax', id: 'C5', spanWidth: 'span2', sortable: false },
-				{ label: 'Total', id: 'C6', spanWidth: 'span2', sortable: true },
-				{ label: 'Notes', id: 'C7', spanWidth: 'span6', sortable: false }
+			columns: [
+				{ label: 'Inv No', id: 'C0', spanWidth: 'span2', sortable: true },
+				{ label: 'Date', id: 'C1', spanWidth: 'span2', sortable: true },
+				{ label: 'Client', id: 'C2', spanWidth: 'span4', sortable: true },
+				{ label: 'Amount', id: 'C3', spanWidth: 'span2', sortable: false },
+				{ label: 'Tax', id: 'C4', spanWidth: 'span2', sortable: false },
+				{ label: 'Total', id: 'C5', spanWidth: 'span2', sortable: true },
+				{ label: 'Notes', id: 'C6', spanWidth: 'span6', sortable: false }
 			],
-			aResponseData: ko.observableArray([
+			responseData: ko.observableArray([
 						{
-							"C1": 0,
-							"C2": "1999-12-02",
-							"C3": "Zorromop",
-							"C4": "$3,502.00",
-							"C5": "$340.00",
-							"C6": "$1,338.00",
-							"C7": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+							"C0": 0,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 1,
-							"C2": "1994-11-06",
-							"C3": "Aquafire",
-							"C4": "$3,586.00",
-							"C5": "$251.00",
-							"C6": "$2,984.00",
-							"C7": "Enim mollit irure officia ullamco laboris laborum est qui ad sunt irure proident esse. Ex aute est eu qui dolor ipsum labore eu incididunt fugiat. Pariatur sit commodo aute fugiat. Nisi incididunt cupidatat officia nisi ullamco elit Lorem cupidatat nisi culpa labore adipisicing culpa non. Nulla ea laborum eiusmod deserunt in labore. Cillum commodo mollit nisi consectetur quis et sit ut. Lorem est consequat ea quis in id officia ex anim.\r\n"
+							"C0": 1,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 2,
-							"C2": "1991-11-30",
-							"C3": "Zinca",
-							"C4": "$3,190.00",
-							"C5": "$278.00",
-							"C6": "$2,726.00",
-							"C7": "Lorem aliqua voluptate qui Lorem reprehenderit elit nostrud est sit aliquip nulla ut. Commodo sint aute non deserunt in irure nulla reprehenderit aliquip nostrud esse velit. Lorem nostrud aliqua et ea officia labore et non non in et. Elit cupidatat aute ullamco in qui nulla veniam qui ex.\r\n"
+							"C0": 2,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 3,
-							"C2": "1995-01-10",
-							"C3": "Zialactic",
-							"C4": "$1,445.00",
-							"C5": "$313.00",
-							"C6": "$3,040.00",
-							"C7": "Dolor labore proident anim sint anim elit irure Lorem Lorem excepteur id. Velit irure fugiat commodo nulla ad irure. Qui aliquip sunt et do minim pariatur pariatur laborum.\r\n"
+							"C0": 3,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 4,
-							"C2": "2003-06-18",
-							"C3": "Buzzness",
-							"C4": "$2,334.00",
-							"C5": "$185.00",
-							"C6": "$1,737.00",
-							"C7": "Magna laborum quis consequat dolore tempor nostrud. Id consequat commodo mollit excepteur reprehenderit irure eiusmod. Adipisicing aute amet dolore occaecat deserunt duis fugiat ad amet qui. Culpa proident non in aute non adipisicing duis dolore.\r\n"
+							"C0": 4,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 5,
-							"C2": "2002-01-18",
-							"C3": "Magneato",
-							"C4": "$1,965.00",
-							"C5": "$259.00",
-							"C6": "$3,816.00",
-							"C7": "Nulla eiusmod reprehenderit enim nisi pariatur duis dolor dolor occaecat cupidatat excepteur laboris. Aliqua sunt qui laborum nisi eiusmod minim magna nostrud sit do excepteur irure cillum. Ut sit culpa aute ea laboris excepteur esse dolor laborum aliquip proident quis. Anim ipsum ex reprehenderit nostrud veniam cillum exercitation dolore Lorem. Esse dolore velit anim non deserunt irure do amet reprehenderit enim sint. Adipisicing irure labore exercitation aliquip amet.\r\n"
+							"C0": 5,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C1": 6,
-							"C2": "2013-08-23",
-							"C3": "Uniworld",
-							"C4": "$2,365.00",
-							"C5": "$372.00",
-							"C6": "$2,971.00",
-							"C7": "Mollit eiusmod pariatur reprehenderit proident incididunt adipisicing in occaecat ea. Ipsum laboris culpa aliquip reprehenderit. Occaecat duis tempor et sunt quis laborum magna aute adipisicing ipsum ad laborum. Aute voluptate elit excepteur laboris culpa consequat Lorem adipisicing. Ex duis enim est quis nulla nostrud reprehenderit aliqua qui. Qui id Lorem do consectetur aliquip reprehenderit Lorem sunt deserunt deserunt adipisicing. Ullamco nisi labore aute ex ipsum.\r\n"
-						},
-						{
-							"C1": 7,
-							"C2": "1995-03-09",
-							"C3": "Remold",
-							"C4": "$1,241.00",
-							"C5": "$300.00",
-							"C6": "$3,821.00",
-							"C7": "Ut cupidatat ex sit consequat occaecat nulla amet. Et non ut eiusmod nostrud fugiat adipisicing aliqua mollit nisi. Anim et fugiat eu duis cupidatat culpa in. Excepteur eu nulla incididunt Lorem ea sunt aute ipsum dolor dolore cupidatat Lorem minim. Eiusmod nostrud commodo ad ut Lorem sit reprehenderit est aute occaecat.\r\n"
-						},
-						{
-							"C1": 8,
-							"C2": "1989-10-03",
-							"C3": "Diginetic",
-							"C4": "$3,856.00",
-							"C5": "$211.00",
-							"C6": "$2,704.00",
-							"C7": "Elit sint quis laborum eiusmod dolor nisi quis laborum amet ea irure. Voluptate est id anim qui duis id voluptate tempor eiusmod amet. Proident ipsum ad laborum aute anim ea ut ad anim officia adipisicing. Culpa in do deserunt nulla excepteur excepteur aliqua qui aute dolore nulla. Exercitation ut fugiat cupidatat ipsum sunt et mollit.\r\n"
-						},
-						{
-							"C1": 9,
-							"C2": "2008-06-30",
-							"C3": "Zoxy",
-							"C4": "$2,699.00",
-							"C5": "$349.00",
-							"C6": "$3,370.00",
-							"C7": "Sunt minim fugiat anim sint ullamco consequat proident cupidatat non ut eiusmod. Velit labore commodo officia sunt cillum officia ut cillum ullamco culpa et nostrud in. Eiusmod commodo adipisicing consectetur ullamco laboris minim veniam aute qui nulla consectetur occaecat dolore.\r\n"
-						},
-						{
-							"C1": 10,
-							"C2": "1998-06-21",
-							"C3": "Hivedom",
-							"C4": "$2,416.00",
-							"C5": "$296.00",
-							"C6": "$1,561.00",
-							"C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-							"C1": 11,
-							"C2": "1998-06-21",
-							"C3": "Hivedom",
-							"C4": "$2,416.00",
-							"C5": "$296.00",
-							"C6": "$1,561.00",
-							"C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-							"C1": 12,
-							"C2": "1998-06-21",
-							"C3": "Hivedom",
-							"C4": "$2,416.00",
-							"C5": "$296.00",
-							"C6": "$1,561.00",
-							"C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 13,
-						    "C2": "2002-01-18",
-						    "C3": "Magneato",
-						    "C4": "$1,965.00",
-						    "C5": "$259.00",
-						    "C6": "$3,816.00",
-						    "C7": "Nulla eiusmod reprehenderit enim nisi pariatur duis dolor dolor occaecat cupidatat excepteur laboris. Aliqua sunt qui laborum nisi eiusmod minim magna nostrud sit do excepteur irure cillum. Ut sit culpa aute ea laboris excepteur esse dolor laborum aliquip proident quis. Anim ipsum ex reprehenderit nostrud veniam cillum exercitation dolore Lorem. Esse dolore velit anim non deserunt irure do amet reprehenderit enim sint. Adipisicing irure labore exercitation aliquip amet.\r\n"
-						},
-						{
-						    "C1": 14,
-						    "C2": "2013-08-23",
-						    "C3": "Uniworld",
-						    "C4": "$2,365.00",
-						    "C5": "$372.00",
-						    "C6": "$2,971.00",
-						    "C7": "Mollit eiusmod pariatur reprehenderit proident incididunt adipisicing in occaecat ea. Ipsum laboris culpa aliquip reprehenderit. Occaecat duis tempor et sunt quis laborum magna aute adipisicing ipsum ad laborum. Aute voluptate elit excepteur laboris culpa consequat Lorem adipisicing. Ex duis enim est quis nulla nostrud reprehenderit aliqua qui. Qui id Lorem do consectetur aliquip reprehenderit Lorem sunt deserunt deserunt adipisicing. Ullamco nisi labore aute ex ipsum.\r\n"
-						},
-						{
-						    "C1": 15,
-						    "C2": "1995-03-09",
-						    "C3": "Remold",
-						    "C4": "$1,241.00",
-						    "C5": "$300.00",
-						    "C6": "$3,821.00",
-						    "C7": "Ut cupidatat ex sit consequat occaecat nulla amet. Et non ut eiusmod nostrud fugiat adipisicing aliqua mollit nisi. Anim et fugiat eu duis cupidatat culpa in. Excepteur eu nulla incididunt Lorem ea sunt aute ipsum dolor dolore cupidatat Lorem minim. Eiusmod nostrud commodo ad ut Lorem sit reprehenderit est aute occaecat.\r\n"
-						},
-						{
-						    "C1": 16,
-						    "C2": "1989-10-03",
-						    "C3": "Diginetic",
-						    "C4": "$3,856.00",
-						    "C5": "$211.00",
-						    "C6": "$2,704.00",
-						    "C7": "Elit sint quis laborum eiusmod dolor nisi quis laborum amet ea irure. Voluptate est id anim qui duis id voluptate tempor eiusmod amet. Proident ipsum ad laborum aute anim ea ut ad anim officia adipisicing. Culpa in do deserunt nulla excepteur excepteur aliqua qui aute dolore nulla. Exercitation ut fugiat cupidatat ipsum sunt et mollit.\r\n"
-						},
-						{
-						    "C1": 17,
-						    "C2": "2008-06-30",
-						    "C3": "Zoxy",
-						    "C4": "$2,699.00",
-						    "C5": "$349.00",
-						    "C6": "$3,370.00",
-						    "C7": "Sunt minim fugiat anim sint ullamco consequat proident cupidatat non ut eiusmod. Velit labore commodo officia sunt cillum officia ut cillum ullamco culpa et nostrud in. Eiusmod commodo adipisicing consectetur ullamco laboris minim veniam aute qui nulla consectetur occaecat dolore.\r\n"
-						},
-						{
-						    "C1": 18,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 19,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 20,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 21,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 22,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 23,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
-						},
-						{
-						    "C1": 24,
-						    "C2": "1998-06-21",
-						    "C3": "Hivedom",
-						    "C4": "$2,416.00",
-						    "C5": "$296.00",
-						    "C6": "$1,561.00",
-						    "C7": "Qui tempor nostrud magna aliquip laborum non. Minim mollit commodo incididunt et laboris amet adipisicing sunt. Irure laborum consequat adipisicing minim id tempor aliquip laborum commodo irure. Pariatur ut ad sunt occaecat. Cillum ullamco dolore sint occaecat adipisicing dolore culpa elit est mollit elit. Dolor nostrud ipsum non irure proident eiusmod ea qui est aliquip sint id est ut. Aliqua proident sint culpa ut voluptate dolor consectetur consectetur excepteur.\r\n"
+							"C0": 6,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						}
 			]),
 			data: ko.observableArray([])
@@ -276,111 +114,111 @@ function (
 
 		var pagerConfig1 = [
 			{
-			    key: 'FirstPage',
-			    value: { htmlContent: '&laquo;', title: 'first', value: 1 }
+				key: 'FirstPage',
+				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
 			},
 			{
-			    key: 'PreviousPage',
-			    value: { htmlContent: '&lt;', title: 'previous', value: null }
+				key: 'PreviousPage',
+				value: { htmlContent: '&lt;', title: 'previous', value: null }
 			},
 			{
-			    key: 'PageNumbers',
-			    value: []
+				key: 'PageNumbers',
+				value: []
 			},
 			{
-			    key: 'NextPage',
-			    value: { htmlContent: '&gt;', title: 'next', value: null }
+				key: 'NextPage',
+				value: { htmlContent: '&gt;', title: 'next', value: null }
 			},
 			{
-			    key: 'LastPage',
-			    value: { htmlContent: '&raquo;', title: 'last', value: null }
+				key: 'LastPage',
+				value: { htmlContent: '&raquo;', title: 'last', value: null }
 			},
 			{
-			    key: 'Text',
-			    value: 'Page Size'
+				key: 'Text',
+				value: 'Page Size'
 			},
 			{
-			    key: 'PageSizeOptions',
-			    value: {
-			        options: [1, 2, 5, 10, 20, 30, 50],
-			        selectedValue: 10
-			    }
+				key: 'PageSizeOptions',
+				value: {
+					options: [1, 2, 5, 10, 20, 30, 50],
+					selectedValue: 10
+				}
 			},
 			{
-			    key: 'Text',
-			    value: 'Showing page'
+				key: 'Text',
+				value: 'Showing page'
 			},
 			{
-			    key: 'CurrentPage',
-			    value: 1
+				key: 'CurrentPage',
+				value: 1
 			},
 			{
-			    key: 'Text',
-			    value: 'of'
+				key: 'Text',
+				value: 'of'
 			},
 			{
-			    key: 'TotalPages',
-			    value: 0
+				key: 'TotalPages',
+				value: 0
 			},
 			{
-			    key: 'Text',
-			    value: 'for'
+				key: 'Text',
+				value: 'for'
 			},
 			{
-			    key: 'TotalRecords',
-			    value: table1.aResponseData().length
+				key: 'TotalRecords',
+				value: table1.responseData().length
 			},
 			{
-			    key: 'Text',
-			    value: 'records'
+				key: 'Text',
+				value: 'records'
 			}
 		];
 
-		// <summary> Render grid </summary>
+		/// <summary> Render grid </summary>
 		var tableObj1 = new grid({
 			data: table1
 		}).render($("#example"));
 
-		// <summary> Call grid pager constructor </summary>
+		/// <summary> Call grid pager constructor </summary>
 		var pager = new gridPager({
 			config: pagerConfig1,
 			pagerTemplate: 'basicTemplate'
 		});
 
-		var pagerConfig1 = pager.oPagerConfig;
+		var oPagerConfig1 = pager.oPagerConfig;
 
 		// Slice grid data based on initial pager configurations
-		var paginatedData = utilities.slicePageData(table1.aResponseData(), pagerConfig1.CurrentPage(), pagerConfig1.PageSize());
-		table1.data(paginatedData);
+		var paginatedData1 = utilities.slicePageData(table1.responseData(), oPagerConfig1.CurrentPage(), oPagerConfig1.PageSize());
+		table1.data(paginatedData1);
 
-		// <summary> Override event handler and slice data on change </summary>
+		/// <summary> Override event handler and slice data on change </summary>
 		var originalOnChange1 = pager.onChange;
 		pager.onChange = function () {
-			var paginatedData = utilities.slicePageData(table1.aResponseData(), pagerConfig1.CurrentPage(), pagerConfig1.PageSize())
-			table1.data(paginatedData);
+			var paginatedData2 = utilities.slicePageData(table1.responseData(), oPagerConfig1.CurrentPage(), oPagerConfig1.PageSize())
+			table1.data(paginatedData2);
 			originalOnChange1()
 		}
 
-		// <summary> Render pager for the grid  <summary>
+		/// <summary> Render pager for the grid  <summary>
 		pager.render($("#pager1"));
 
 		//#endregion
 
 		//#region Table2
 
-		// <summary> Assign grid properties and data </summary>
+		/// <summary> Assign grid properties and data </summary>
 		var table2 = {
 			caption: "new table caption 2",
 			isExpanded: ko.observable(true),
 			sortColumn: ko.observable('C2'),
 			sortOrder: ko.observable('asc'),
-			aColModel: [
+			columns: [
 				{ label: 'Contact Name', id: 'C2', spanWidth: 'span3', sortable: true },
 				{ label: 'Contact title', id: 'C3', spanWidth: 'span3', sortable: true },
 				{ label: 'Company Name', id: 'C4', spanWidth: 'span3', sortable: false },
 				{ label: 'Country', id: 'C5', spanWidth: 'span3', sortable: true },
 			],
-			aResponseData: ko.observableArray([
+			responseData: ko.observableArray([
 					{
 						"C1": 0,
 						"C2": "Carissa Lancaster",
@@ -599,104 +437,383 @@ function (
 						"C5": "Virgin Islands (US)"
 					},
 					{
-					    "C1": 31,
-					    "C2": "Deborah Steele",
-					    "C3": "Marketing Manager",
-					    "C4": "Enervate",
-					    "C5": "Virgin Islands (US)"
+						"C1": 31,
+						"C2": "Deborah Steele",
+						"C3": "Marketing Manager",
+						"C4": "Enervate",
+						"C5": "Virgin Islands (US)"
 					}
 			]),
 			data: ko.observableArray([])
 		}
 
-		// <summary> Render grid </summary>
+		/// <summary> Render grid </summary>
 		var tableObj2 = new grid({
 			data: table2
 		}).render($("#example2"));
 
-		var pagerConfig = [
+		var pagerConfig2 = [
 			{
-			    key: 'FirstPage',
-			    value: { htmlContent: '&laquo;', title: 'first', value: 1 }
+				key: 'FirstPage',
+				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
 			},
 			{
-			    key: 'PreviousPage',
-			    value: { htmlContent: '&lt;', title: 'previous', value: null }
+				key: 'PreviousPage',
+				value: { htmlContent: '&lt;', title: 'previous', value: null }
 			},
 			{
-			    key: 'PageNumbers',
-			    value: []
+				key: 'PageNumbers',
+				value: []
 			},
 			{
-			    key: 'NextPage',
-			    value: { htmlContent: '&gt;', title: 'next', value: null }
+				key: 'NextPage',
+				value: { htmlContent: '&gt;', title: 'next', value: null }
 			},
 			{
-			    key: 'LastPage',
-			    value: { htmlContent: '&raquo;', title: 'last', value: null }
+				key: 'LastPage',
+				value: { htmlContent: '&raquo;', title: 'last', value: null }
 			},
 			{
-			    key: 'Text',
-			    value: 'Page Size'
+				key: 'Text',
+				value: 'Page Size'
 			},
 			{
-			    key: 'PageSizeOptions',
-			    value: {
-			        options: [1, 2, 5, 10, 20, 30, 50],
-			        selectedValue: 10
-			    }
+				key: 'PageSizeOptions',
+				value: {
+					options: [1, 2, 5, 10, 20, 30, 50],
+					selectedValue: 10
+				}
 			},
 			{
-			    key: 'Text',
-			    value: 'Showing page'
+				key: 'Text',
+				value: 'Showing page'
 			},
 			{
-			    key: 'CurrentPage',
-			    value: 1
+				key: 'CurrentPage',
+				value: 1
 			},
 			{
-			    key: 'Text',
-			    value: 'of'
+				key: 'Text',
+				value: 'of'
 			},
 			{
-			    key: 'TotalPages',
-			    value: 0
+				key: 'TotalPages',
+				value: 0
 			},
 			{
-			    key: 'Text',
-			    value: 'for'
+				key: 'Text',
+				value: 'for'
 			},
 			{
-			    key: 'TotalRecords',
-			    value: table2.aResponseData().length
+				key: 'TotalRecords',
+				value: table2.responseData().length
 			},
 			{
-			    key: 'Text',
-			    value: 'records'
+				key: 'Text',
+				value: 'records'
 			}
 		];
 
-	    // <summary> Call grid pager constructor </summary>
+		/// <summary> Call grid pager constructor </summary>
 		var pager2 = new gridPager({
-			config: pagerConfig
+			config: pagerConfig2
 		});
 
-		var pagerConfig2 = pager2.oPagerConfig;
+		var oPagerConfig2 = pager2.oPagerConfig;
 
-	    // Slice grid data based on initial pager configurations
-		var paginatedData = utilities.slicePageData(table2.aResponseData(), pagerConfig2.CurrentPage(), pagerConfig2.PageSize());
-		table2.data(paginatedData);
+		// Slice grid data based on initial pager configurations
+		var paginatedData3 = utilities.slicePageData(table2.responseData(), oPagerConfig2.CurrentPage(), oPagerConfig2.PageSize());
+		table2.data(paginatedData3);
 
-	    // <summary> Override event handler and slice data on change </summary>
-		var originalOnChange = pager2.onChange;
+		/// <summary> Override event handler and slice data on change </summary>
+		var originalOnChange2 = pager2.onChange;
 		pager2.onChange = function () {
-			var paginatedData = utilities.slicePageData(table2.aResponseData(), pagerConfig2.CurrentPage(), pagerConfig2.PageSize())
-			table2.data(paginatedData);
-			originalOnChange()
+			var paginatedData4 = utilities.slicePageData(table2.responseData(), oPagerConfig2.CurrentPage(), oPagerConfig2.PageSize())
+			table2.data(paginatedData4);
+			originalOnChange2()
 		}
 
-		// <summary> Render pager for the grid  <summary>
+		/// <summary> Render pager for the grid  <summary>
 		pager2.render($("#pager2"));
+
+		//#endregion
+
+		//#region Table2
+
+		/// <summary> Assign grid properties and data </summary>
+		var table3 = {
+			caption: "Verify configurable column grid",
+			//isExpanded: ko.observable(true),
+			sortColumn: ko.observable('C1'),
+			sortOrder: ko.observable('asc'),
+			columns: [
+				{ label: 'Index' },
+				{ label: 'Name' },
+				{ label: 'Position' },
+				{ label: 'Organization Name' },
+				{ label: 'Nationality' }
+			],
+			responseData: ko.observableArray([
+				{
+					"C0": 0,
+					"C1": "Juarez Hudson",
+					"C2": "Marketing Manager",
+					"C3": "Acium",
+					"C4": "Estonia"
+				},
+				{
+					"C0": 1,
+					"C1": "Nell Hall",
+					"C2": "Operations Manager",
+					"C3": "Extro",
+					"C4": "San Marino"
+				},
+				{
+					"C0": 2,
+					"C1": "Roth Byers",
+					"C2": "Order Administrator",
+					"C3": "Xurban",
+					"C4": "Djibouti"
+				},
+				{
+					"C0": 3,
+					"C1": "Garner Stout",
+					"C2": "Marketing Manager",
+					"C3": "Squish",
+					"C4": "Macau"
+				},
+				{
+					"C0": 4,
+					"C1": "Cleo Burgess",
+					"C2": "Marketing Manager",
+					"C3": "Snorus",
+					"C4": "Iceland"
+				},
+				{
+					"C0": 5,
+					"C1": "Tania Powell",
+					"C2": "Marketing Manager",
+					"C3": "Bittor",
+					"C4": "Libya"
+				},
+				{
+					"C0": 6,
+					"C1": "Krystal Murray",
+					"C2": "Order Administrator",
+					"C3": "Andryx",
+					"C4": "Congo"
+				},
+				{
+					"C0": 7,
+					"C1": "Freida Hardy",
+					"C2": "Order Administrator",
+					"C3": "Zilphur",
+					"C4": "Trinidad &amp; Tobago"
+				},
+				{
+					"C0": 8,
+					"C1": "Lyons Gilmore",
+					"C2": "Owner",
+					"C3": "Menbrain",
+					"C4": "India"
+				},
+				{
+					"C0": 9,
+					"C1": "Pamela Mooney",
+					"C2": "Order Administrator",
+					"C3": "Moreganic",
+					"C4": "Sudan"
+				},
+				{
+					"C0": 10,
+					"C1": "Gonzalez Baxter",
+					"C2": "Order Administrator",
+					"C3": "Acrodance",
+					"C4": "Honduras"
+				},
+				{
+					"C0": 11,
+					"C1": "Quinn Shaw",
+					"C2": "Owner",
+					"C3": "Gushkool",
+					"C4": "Cameroon"
+				},
+				{
+					"C0": 12,
+					"C1": "Lilia Conrad",
+					"C2": "Order Administrator",
+					"C3": "Deminimum",
+					"C4": "Greece"
+				},
+				{
+					"C0": 13,
+					"C1": "Pam Bowman",
+					"C2": "Order Administrator",
+					"C3": "Songbird",
+					"C4": "Zimbabwe"
+				},
+				{
+					"C0": 14,
+					"C1": "Monroe Massey",
+					"C2": "Operations Manager",
+					"C3": "Billmed",
+					"C4": "Guernsey"
+				},
+				{
+					"C0": 15,
+					"C1": "Essie Hester",
+					"C2": "Order Administrator",
+					"C3": "Xinware",
+					"C4": "Anguilla"
+				},
+				{
+					"C0": 16,
+					"C1": "Carlson Adkins",
+					"C2": "Operations Manager",
+					"C3": "Zipak",
+					"C4": "Palestine"
+				},
+				{
+					"C0": 17,
+					"C1": "Bradford Stevenson",
+					"C2": "Operations Manager",
+					"C3": "Silodyne",
+					"C4": "Mali"
+				},
+				{
+					"C0": 18,
+					"C1": "Francesca Porter",
+					"C2": "Owner",
+					"C3": "Savvy",
+					"C4": "Mongolia"
+				},
+				{
+					"C0": 19,
+					"C1": "Haley Gonzalez",
+					"C2": "Order Administrator",
+					"C3": "Zillacon",
+					"C4": "Rwanda"
+				},
+				{
+					"C0": 20,
+					"C1": "Deidre Montoya",
+					"C2": "Operations Manager",
+					"C3": "Isoswitch",
+					"C4": "Russia"
+				},
+				{
+					"C0": 21,
+					"C1": "Leanne Osborn",
+					"C2": "Operations Manager",
+					"C3": "Ramjob",
+					"C4": "Croatia"
+				},
+				{
+					"C0": 22,
+					"C1": "Stanley Barron",
+					"C2": "Order Administrator",
+					"C3": "Fuelton",
+					"C4": "Ukraine"
+				},
+				{
+					"C0": 23,
+					"C1": "Aurelia Acevedo",
+					"C2": "Order Administrator",
+					"C3": "Eargo",
+					"C4": "France"
+				}
+			]),
+			data: ko.observableArray([])
+		}
+
+		/// <summary> Render grid </summary>
+		var tableObj3 = new grid({
+			data: table3
+		}).render($("#example3"));
+
+		var pagerConfig3 = [
+			{
+				key: 'FirstPage',
+				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
+			},
+			{
+				key: 'PreviousPage',
+				value: { htmlContent: '&lt;', title: 'previous', value: null }
+			},
+			{
+				key: 'PageNumbers',
+				value: []
+			},
+			{
+				key: 'NextPage',
+				value: { htmlContent: '&gt;', title: 'next', value: null }
+			},
+			{
+				key: 'LastPage',
+				value: { htmlContent: '&raquo;', title: 'last', value: null }
+			},
+			{
+				key: 'Text',
+				value: 'Page Size'
+			},
+			{
+				key: 'PageSizeOptions',
+				value: {
+					options: [1, 2, 5, 10, 20, 30, 50],
+					selectedValue: 10
+				}
+			},
+			{
+				key: 'Text',
+				value: 'Showing page'
+			},
+			{
+				key: 'CurrentPage',
+				value: 1
+			},
+			{
+				key: 'Text',
+				value: 'of'
+			},
+			{
+				key: 'TotalPages',
+				value: 0
+			},
+			{
+				key: 'Text',
+				value: 'for'
+			},
+			{
+				key: 'TotalRecords',
+				value: table3.responseData().length
+			},
+			{
+				key: 'Text',
+				value: 'records'
+			}
+		];
+
+		/// <summary> Call grid pager constructor </summary>
+		var pager3 = new gridPager({
+			config: pagerConfig3
+		});
+
+		var oPagerConfig3 = pager3.oPagerConfig;
+
+		// Slice grid data based on initial pager configurations
+		var paginatedData5 = utilities.slicePageData(table3.responseData(), oPagerConfig3.CurrentPage(), oPagerConfig3.PageSize());
+		table3.data(paginatedData5);
+
+		/// <summary> Override event handler and slice data on change </summary>
+		var originalOnChange3 = pager3.onChange;
+		pager3.onChange = function () {
+			var paginatedData6 = utilities.slicePageData(table3.responseData(), oPagerConfig3.CurrentPage(), oPagerConfig3.PageSize())
+			table3.data(paginatedData6);
+			originalOnChange3()
+		}
+
+		/// <summary> Render pager for the grid  <summary>
+		pager3.render($("#pager3"));
 
 		//#endregion
 
@@ -705,8 +822,6 @@ function (
 		return this;
 	};
 
-	// <summary> Instantiate viewModel </summary>
-	var vm = new viewModel();
-
-	return vm;
+	/// <summary> Instantiate viewModel </summary>
+	return new viewModel();
 });

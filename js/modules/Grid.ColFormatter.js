@@ -43,7 +43,7 @@ function(
 		return this;
 	};
 	
-	// <summary> Instantiate viewModel </summary>
+	/// <summary> Instantiate viewModel </summary>
 	var vm = new viewModel();
 	
 	return vm;

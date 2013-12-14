@@ -13,19 +13,19 @@ function (
 	var initTableData = {
 		caption: 'Single level grid',
 		isExpanded: true,
-		aColModel: [],
-		aResponseData: [],
+		columns: [],
+		responseData: [],
 		data: []
 	};
 
 	var tableHtml =
 			"<section data-bind='with: tableObject'>" +
-				"<h2 class='expanded cursorPointer' data-bind='text: caption, click: $parent.toggleExpandCollapseContainer.bind($data, isExpanded), expandCollapse: isExpanded'></h2>" +
+				"{tableExpandableHeader}" +
 				"<div class='table-responsive' data-bind='visible: isExpanded'>" +
 					"<table class='table table-striped table-hover'>" +
 						"<thead>" +
 							"<tr class='row'>" +
-							"<!-- ko foreach: aColModel -->" +
+							"<!-- ko foreach: columns -->" +
 								"<!-- ko ifnot: sortable-->" +
 								"<th data-bind='textAndTitle: label, " +
 										"class : { className: spanWidth }'>" +
@@ -43,7 +43,7 @@ function (
 							"</tr>" +
 						"</thead>" +
 						"<tbody data-bind='foreach: data'>" +
-							"<tr class='row' data-bind='foreach: $parent.aColModel'>" +
+							"<tr class='row' data-bind='foreach: $parent.columns'>" +
 								"<td data-bind='text: $parent[id]'></td>" +
 							"</tr>" +
 						"</tbody>" +
@@ -61,22 +61,92 @@ function (
 	* @returns: view model object for grid
 	* <summary> Other details </summary>
 	*/
-
-	function Grid(configOptions) {
+	function Grid(tableConfig) {
 
 		var grid = this;
 
-		//#region Grid objects
+		//#region Custom Html generator
 
-		grid.tableObject = !!configOptions.data ? configOptions.data : initTableData;
+		//// TODO: Update logic/ template for table HTML
+		// Assign initial template
 		grid.tableHtml = tableHtml;
 
+		/// <summary> Hash for Html templates for grid components </summary>
+		var templateHtml = {
+			'Header': "<h2 data-bind='text: caption'></h2>",
+			'ExpandableHeader': "<h2 class='expanded cursorPointer' data-bind='text: caption, " +
+															   "click: $parent.toggleExpandCollapseContainer.bind($data, isExpanded), " +
+															   "expandCollapse: isExpanded'> " +
+								"</h2>"
+		};
+
+		/// <summary> Check for isExpanded property </summary>
+		var _getTableHtml = function (config) {
+
+			// Check if 'isExpanded' property exists for table
+			// else add 'isExpanded' and default to 'true'
+			if (!config.hasOwnProperty('isExpanded')) {
+				config['isExpanded'] = true;
+				grid.tableHtml = tableHtml.replace('{tableExpandableHeader}', templateHtml['Header']);
+			} else {
+				grid.tableHtml = tableHtml.replace('{tableExpandableHeader}', templateHtml['ExpandableHeader']);
+			}
+		};
+
+		/// <summary> Generate  html for columns </summary>
+		var _getColumnHtml = function (columns) {
+
+			if (!!columns && columns.length > 0) {
+				var noOfColumns = columns.length;
+
+				/// Iterate through columns array
+				for (var index = 0; index < noOfColumns; index++) {
+					var column = columns[index];
+
+					// Check if 'id' property exist for every column in user configuration 
+					// else add 'id' based on column index
+					if (!column.hasOwnProperty('id')) {
+						column['id'] = 'C' + index;
+					}
+
+					// Check if 'spanwidth' property exist for every column in user configuration 
+					// else add 'spanwidth' based on no of columns 
+					if (!column.hasOwnProperty('spanWidth')) {
+						column['spanWidth'] = 'span' + Math.ceil((12 / noOfColumns), 10);
+					}
+
+					// Check if 'sortable' property exists for every column in user configuration
+					// else add ''sortable' to all columns and default to 'false'
+					if (!column.hasOwnProperty('sortable')) {
+						column['sortable'] = false;
+					}
+				};
+
+			}
+
+		}
+
+        //// TODO: Use this to update more configuration on grid components
+		/// <summary> Hash to map Function and Placeholder used to generate HTML </summary>
+		var _placeHolder = {
+			'columns': _getColumnHtml
+		};
+
+		//#endregion
+
+		//#region Grid objects
+		
+		grid.tableObject = !!tableConfig.data ? tableConfig.data : initTableData;
+
+		// Create customized templates if configuration not provided by user
+		_getTableHtml(grid.tableObject);
+		_getColumnHtml(grid.tableObject.columns);
 
 		//#endregion
 
 		//#region Functions
 
-		// <summary> Update sort column on click </summary> 
+		/// <summary> Update sort column on click </summary> 
 		grid.sort = function (tableObject, column) {
 
 			//Check if sortable column
@@ -99,68 +169,6 @@ function (
 				//<summary> Sort the data per current sort column </summary>
 				tableObject.sortColumn(column.id);
 			}
-		}
-
-		// <summary> Create table using basic jquery </summary>
-		grid.generateTable = function (tableConfiguration) {
-
-			var tableHeader = tableConfiguration.header;
-			var tableContent = tableConfiguration.content;
-			var tableParentContainer = tableConfiguration.parentContainer;
-
-			// creates a <table> element 
-			var tbl = $('<table></table>').appendTo(tableParentContainer);
-
-			//#region Create Table header
-
-			var tblHead = $('<thead></thead>');
-			var columnHeaderRow = $('<tr></tr>');
-
-			for (var index = 0; index < tableHeader.length; index++) {
-				// create td for each column and bind the text
-				var currentColumn = tableHeader[index];
-
-				var columnHeaderCell = $('<th></th>').
-											text(currentColumn.label)
-											.attr({ 'id': currentColumn.id, 'class': currentColumn.spanWidth })
-											.css({ 'cursorPointer': currentColumn.sortable });
-
-				columnHeaderCell.appendTo(columnHeaderRow);
-			}
-
-			//Append row to header
-			columnHeaderRow.appendTo(tblHead);
-
-			//#endregion
-
-			//#region Create Table body
-
-			var tblBody = $('<tbody></tbody>');
-
-			for (var rowIndex = 0; rowIndex < tableContent.length; rowIndex++) {
-				var currentDataRow = tableContent[rowIndex];
-
-				// create a data row
-				var dataRow = $('<tr></tr>');
-
-				// create cell content for the row and append to row
-				for (var cell in currentDataRow) {
-					var cellData = $('<td></td>').text(currentDataRow[cell]);
-
-					cellData.appendTo(dataRow);
-				}
-
-				// add the row to the end of the table body
-				dataRow.appendTo(tblBody);
-			}
-
-			//#endregion
-
-			// Append header to table
-			tblHead.appendTo(tbl);
-
-			// Append body to table
-			tblBody.appendTo(tbl);
 		}
 
 		//<summary> Toggle expand/ collapse for container </summary> 
