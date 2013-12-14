@@ -11,7 +11,7 @@ function (
 
 	//#region Grid initial data structure
 	var initTableData = {
-		tableCaption: 'Single level grid',
+		caption: 'Single level grid',
 		isExpanded: true,
 		aColModel: [],
 		aResponseData: [],
@@ -20,7 +20,7 @@ function (
 
 	var tableHtml =
 			"<section data-bind='with: tableObject'>" +
-				"<h2 class='expanded cursorPointer' data-bind='text: tableCaption, click: $parent.toggleExpandCollapseContainer.bind($data, isExpanded), expandCollapse: isExpanded'></h2>" +
+				"<h2 class='expanded cursorPointer' data-bind='text: caption, click: $parent.toggleExpandCollapseContainer.bind($data, isExpanded), expandCollapse: isExpanded'></h2>" +
 				"<div class='table-responsive' data-bind='visible: isExpanded'>" +
 					"<table class='table table-striped table-hover'>" +
 						"<thead>" +

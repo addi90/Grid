@@ -31,7 +31,7 @@ function (
 
 		// <summary> Assign grid properties and data </summary>
 		var table1 = {
-			tableCaption: "new table caption",
+			caption: "new table caption",
 			isExpanded: ko.observable(true),
 			sortColumn: ko.observable('C1'),
 			sortOrder: ko.observable('asc'),
@@ -384,7 +384,7 @@ function (
 
 		// <summary> Assign grid properties and data </summary>
 		var table2 = {
-			tableCaption: "new table caption 2",
+			caption: "new table caption 2",
 			isExpanded: ko.observable(true),
 			sortColumn: ko.observable('C2'),
 			sortOrder: ko.observable('asc'),
