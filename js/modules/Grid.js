@@ -19,13 +19,13 @@ function (
 	};
 
 	var tableHtml =
-			"<section data-bind='with: tableObject'>" +
+			"<section data-bind='with: tableObject, as: &apos;parent&apos; '>" +
 				"{tableExpandableHeader}" +
 				"<div class='table-responsive' data-bind='visible: isExpanded'>" +
 					"<table class='table table-striped table-hover'>" +
 						"<thead>" +
 							"<tr class='row'>" +
-							"<!-- ko foreach: columns -->" +
+							"<!-- ko foreach: columns, as: 'column'-->" +
 								"<!-- ko ifnot: sortable-->" +
 								"<th data-bind='textAndTitle: label, " +
 										"class : { className: spanWidth }'>" +
@@ -34,7 +34,7 @@ function (
 								"<!-- ko if: sortable-->" +
 								"<th data-bind='class : { className: spanWidth, isCursorPointer: sortable }'> " +
 									"<a href='#' data-bind='textAndTitle: label, " +
-										"updateSortIcons: { columnName: id, sortColumnName: $parent.sortColumn, sortOrder: $parent.sortOrder }," +
+										"updateSortIcons: { columnName: id, sortColumnName: parent.sortColumn, sortOrder: parent.sortOrder }," +
 										"click: $root.sort.bind($data, $parent)'>" +
 									"</a>" +
 								"</th>" +
@@ -44,7 +44,7 @@ function (
 						"</thead>" +
 						"<tbody data-bind='foreach: data'>" +
 							"<tr class='row' data-bind='foreach: $parent.columns'>" +
-								"<td data-bind='text: $parent[id]'></td>" +
+							    "<td data-bind='text: $parent[id]'></td>" +
 							"</tr>" +
 						"</tbody>" +
 						"<div class='clearfix'></div>" +
@@ -67,6 +67,12 @@ function (
 
 		//#region Custom Html generator
 
+	    //#region Grid objects
+
+		grid.tableObject = !!tableConfig.data ? tableConfig.data : initTableData;
+
+	    //#endregion
+
 		//// TODO: Update logic/ template for table HTML
 		// Assign initial template
 		grid.tableHtml = tableHtml;
@@ -77,7 +83,9 @@ function (
 			'ExpandableHeader': "<h2 class='expanded cursorPointer' data-bind='text: caption, " +
 															   "click: $parent.toggleExpandCollapseContainer.bind($data, isExpanded), " +
 															   "expandCollapse: isExpanded'> " +
-								"</h2>"
+								"</h2>",
+			'Cell': "<td data-bind='text: $parent[id]'></td>",
+			'FormattedCell': "<td data-bind='formatCell: $parent[id], cellClass: &apos;btn&apos;'></td>"
 		};
 
 		/// <summary> Check for isExpanded property </summary>
@@ -93,6 +101,14 @@ function (
 			}
 		};
 
+	    /// <summary> Get formatted cells </summary>
+		var _getFormattedCellHtml = function (column) {
+		    // Format the data array for the input column
+		    ko.utils.arrayForEach(grid.tableObject, function (currentRow) {
+		        currentRow[column]['isclickable'] = true;
+		    })
+		};
+
 		/// <summary> Generate  html for columns </summary>
 		var _getColumnHtml = function (columns) {
 
@@ -101,12 +117,30 @@ function (
 
 				/// Iterate through columns array
 				for (var index = 0; index < noOfColumns; index++) {
-					var column = columns[index];
 
+					// Check if 'label' property exist for every column in user configuration 
+					// else add 'label' for the data on column index
+					if (!columns[index].hasOwnProperty('label')) {
+						var columnLabel = columns[index];
+
+						// Create an object with 'label' property and value at 'columns[index]'
+						columns[index] = {};
+						columns[index]['label'] = columnLabel;
+					}
+
+					var column = columns[index];
+					
 					// Check if 'id' property exist for every column in user configuration 
 					// else add 'id' based on column index
 					if (!column.hasOwnProperty('id')) {
 						column['id'] = 'C' + index;
+					}
+
+					// Check if 'allowHTML' property exist for column in user configuration 
+					// And call the handler for the same to get cell values
+					if (column.hasOwnProperty('allowHTML')) {
+					    // Get formatted data for current column
+					    _getFormattedCellHtml(column.id);
 					}
 
 					// Check if 'spanwidth' property exist for every column in user configuration 
@@ -118,15 +152,13 @@ function (
 					// Check if 'sortable' property exists for every column in user configuration
 					// else add ''sortable' to all columns and default to 'false'
 					if (!column.hasOwnProperty('sortable')) {
-						column['sortable'] = false;
+						column['sortable'] = true;
 					}
 				};
-
 			}
-
 		}
 
-        //// TODO: Use this to update more configuration on grid components
+		//// TODO: Use this to update more configuration on grid components
 		/// <summary> Hash to map Function and Placeholder used to generate HTML </summary>
 		var _placeHolder = {
 			'columns': _getColumnHtml
@@ -134,15 +166,9 @@ function (
 
 		//#endregion
 
-		//#region Grid objects
-		
-		grid.tableObject = !!tableConfig.data ? tableConfig.data : initTableData;
-
-		// Create customized templates if configuration not provided by user
+	    // Create customized templates if configuration not provided by user
 		_getTableHtml(grid.tableObject);
 		_getColumnHtml(grid.tableObject.columns);
-
-		//#endregion
 
 		//#region Functions
 

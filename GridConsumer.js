@@ -538,20 +538,19 @@ function (
 
 		//#endregion
 
-		//#region Table2
+		//#region Table3
 
 		/// <summary> Assign grid properties and data </summary>
 		var table3 = {
 			caption: "Verify configurable column grid",
-			//isExpanded: ko.observable(true),
-			sortColumn: ko.observable('C1'),
+			sortColumn: ko.observable('C0'),
 			sortOrder: ko.observable('asc'),
 			columns: [
-				{ label: 'Index' },
-				{ label: 'Name' },
-				{ label: 'Position' },
-				{ label: 'Organization Name' },
-				{ label: 'Nationality' }
+				'Index',
+				{ label: 'Name', allowHTML: true, formatter: '<a href="#{value}" data-bind>{value}</a>' },
+				'Position',
+				'Organization Name',
+				'Nationality'
 			],
 			responseData: ko.observableArray([
 				{
