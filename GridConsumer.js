@@ -13,29 +13,29 @@ function (
 	grid,
 	gridPager,
 	utilities) {
-	"use strict";
+    "use strict";
 
-	/**
+    /**
 	* Grid consumer
 	* @param: null
 	* @returns: view model object for grid consumer
 	* <summary> Other details </summary>
 	*/
-	function viewModel() {
+    function viewModel() {
 
-		var self = this;
+        var self = this;
 
-		//#region Create grid
+        //#region Create grid
 
-		//#region Table1
+        //#region Table1
 
-		/// <summary> Assign grid properties and data </summary>
-		var table1 = {
-			caption: "new table caption",
-			isExpanded: ko.observable(true),
-			sortColumn: ko.observable('C0'),
-			sortOrder: ko.observable('asc'),
-			columns: [
+        /// <summary> Assign grid properties and data </summary>
+        var table1 = {
+            caption: "new table caption",
+            isExpanded: ko.observable(true),
+            sortColumn: ko.observable('C0'),
+            sortOrder: ko.observable('asc'),
+            columns: [
 				{ label: 'Inv No', id: 'C0', spanWidth: 'span2', sortable: true },
 				{ label: 'Date', id: 'C1', spanWidth: 'span2', sortable: true },
 				{ label: 'Client', id: 'C2', spanWidth: 'span4', sortable: true },
@@ -43,167 +43,121 @@ function (
 				{ label: 'Tax', id: 'C4', spanWidth: 'span2', sortable: false },
 				{ label: 'Total', id: 'C5', spanWidth: 'span2', sortable: true },
 				{ label: 'Notes', id: 'C6', spanWidth: 'span6', sortable: false }
-			],
-			responseData: ko.observableArray([
+            ],
+            responseData: ko.observableArray([
 						{
-							"C0": 0,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 0,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 1,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 1,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 2,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 2,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 3,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 3,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 4,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 4,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 5,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 5,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						},
 						{
-							"C0": 6,
-							"C1": "1999-12-02",
-							"C2": "Zorromop",
-							"C3": "$3,502.00",
-							"C4": "$340.00",
-							"C5": "$1,338.00",
-							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						    "C0": 6,
+						    "C1": "1999-12-02",
+						    "C2": "Zorromop",
+						    "C3": "$3,502.00",
+						    "C4": "$340.00",
+						    "C5": "$1,338.00",
+						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
 						}
-			]),
-			data: ko.observableArray([])
-		};
+            ]),
+            data: ko.observableArray([])
+        };
 
-		var pagerConfig1 = [
-			{
-				key: 'FirstPage',
-				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
-			},
-			{
-				key: 'PreviousPage',
-				value: { htmlContent: '&lt;', title: 'previous', value: null }
-			},
-			{
-				key: 'PageNumbers',
-				value: []
-			},
-			{
-				key: 'NextPage',
-				value: { htmlContent: '&gt;', title: 'next', value: null }
-			},
-			{
-				key: 'LastPage',
-				value: { htmlContent: '&raquo;', title: 'last', value: null }
-			},
-			{
-				key: 'Text',
-				value: 'Page Size'
-			},
-			{
-				key: 'PageSizeOptions',
-				value: {
-					options: [1, 2, 5, 10, 20, 30, 50],
-					selectedValue: 10
-				}
-			},
-			{
-				key: 'Text',
-				value: 'Showing page'
-			},
-			{
-				key: 'CurrentPage',
-				value: 1
-			},
-			{
-				key: 'Text',
-				value: 'of'
-			},
-			{
-				key: 'TotalPages',
-				value: 0
-			},
-			{
-				key: 'Text',
-				value: 'for'
-			},
-			{
-				key: 'TotalRecords',
-				value: table1.responseData().length
-			},
-			{
-				key: 'Text',
-				value: 'records'
-			}
-		];
 
-		/// <summary> Render grid </summary>
-		var tableObj1 = new grid({
-			data: table1
-		}).render($("#example"));
+        /// <summary> Call grid pager constructor </summary>
+        var pager = new gridPager();
 
-		/// <summary> Call grid pager constructor </summary>
-		var pager = new gridPager({
-			config: pagerConfig1,
-			pagerTemplate: 'basicTemplate'
-		});
+        var pagerConfig1 = {
+            pageSize: 2,
+            pageOptions: [1, 2, 5, 10, 20, 50, 100],
+            numberOfLinks: 5,
+            totalRecords: table1.responseData().length,
+            template: gridPager.pagerTemplates.basicTemplate,
+            overrideConfig: {
+                firstPage: {
+                    value: {
 
-		var oPagerConfig1 = pager.oPagerConfig;
+                    }
+                }
+            },
+            /// <summary> Override event handler and slice data on change </summary>
+            onChange: function () {
+                //// Slice grid data based on initial pager configurations
+                var paginatedData1 = utilities.slicePageData(table1.responseData(), 1, 2);
+                table1.data(paginatedData1);
+            }
+        }
 
-		// Slice grid data based on initial pager configurations
-		var paginatedData1 = utilities.slicePageData(table1.responseData(), oPagerConfig1.CurrentPage(), oPagerConfig1.PageSize());
-		table1.data(paginatedData1);
+        /// <summary> Render grid </summary>
+        var tableObj1 = new grid({
+            data: table1
+        }).render($("#example"));
 
-		/// <summary> Override event handler and slice data on change </summary>
-		var originalOnChange1 = pager.onChange;
-		pager.onChange = function () {
-			var paginatedData2 = utilities.slicePageData(table1.responseData(), oPagerConfig1.CurrentPage(), oPagerConfig1.PageSize())
-			table1.data(paginatedData2);
-			originalOnChange1()
-		}
+        /// <summary> Initialize and Render pager for the grid  <summary>
+        pager.render(pagerConfig1, $("#pager1"));
 
-		/// <summary> Render pager for the grid  <summary>
-		pager.render($("#pager1"));
+        var oPagerConfig1 = pager.oPagerConfig;
 
-		//#endregion
+        pager.getPagerConfig();
 
+        pagerConfig1.onChange(function () {
+            //// Slice grid data based on initial pager configurations
+            var paginatedData1 = utilities.slicePageData(table1.responseData(), 1, 2);
+            table1.data(paginatedData1);
+        });
+
+        //#endregion
+
+        /*
 		//#region Table2
 
 		/// <summary> Assign grid properties and data </summary>
@@ -455,11 +409,11 @@ function (
 		var pagerConfig2 = [
 			{
 				key: 'FirstPage',
-				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
+				value: { htmlFormat: '&laquo;', title: 'first', value: 1 }
 			},
 			{
 				key: 'PreviousPage',
-				value: { htmlContent: '&lt;', title: 'previous', value: null }
+				value: { htmlFormat: '&lt;', title: 'previous', value: null }
 			},
 			{
 				key: 'PageNumbers',
@@ -467,11 +421,11 @@ function (
 			},
 			{
 				key: 'NextPage',
-				value: { htmlContent: '&gt;', title: 'next', value: null }
+				value: { htmlFormat: '&gt;', title: 'next', value: null }
 			},
 			{
 				key: 'LastPage',
-				value: { htmlContent: '&raquo;', title: 'last', value: null }
+				value: { htmlFormat: '&raquo;', title: 'last', value: null }
 			},
 			{
 				key: 'Text',
@@ -543,12 +497,20 @@ function (
 		/// <summary> Assign grid properties and data </summary>
 		var table3 = {
 			caption: "Verify configurable column grid",
-			sortColumn: ko.observable('C0'),
+			sortColumn: ko.observable('C1'),
 			sortOrder: ko.observable('asc'),
 			columns: [
 				'Index',
-				{ label: 'Name', allowHTML: true, formatter: '<a href="#{value}" data-bind>{value}</a>' },
-				'Position',
+				{
+					label: 'Name', formatter: function () {
+						return "<a href='#' data-bind='text: {value}, attr: { href: &apos;#&apos; + {value} }'></a>"
+					}
+				},
+				{
+					label: 'Position', formatter: function () {
+						return "<button class='btn btn-success' data-bind='text: {value}'></button>"
+					}
+				},
 				'Organization Name',
 				'Nationality'
 			],
@@ -733,11 +695,11 @@ function (
 		var pagerConfig3 = [
 			{
 				key: 'FirstPage',
-				value: { htmlContent: '&laquo;', title: 'first', value: 1 }
+				value: { htmlFormat: '&laquo;', title: 'first', value: 1 }
 			},
 			{
 				key: 'PreviousPage',
-				value: { htmlContent: '&lt;', title: 'previous', value: null }
+				value: { htmlFormat: '&lt;', title: 'previous', value: null }
 			},
 			{
 				key: 'PageNumbers',
@@ -745,11 +707,11 @@ function (
 			},
 			{
 				key: 'NextPage',
-				value: { htmlContent: '&gt;', title: 'next', value: null }
+				value: { htmlFormat: '&gt;', title: 'next', value: null }
 			},
 			{
 				key: 'LastPage',
-				value: { htmlContent: '&raquo;', title: 'last', value: null }
+				value: { htmlFormat: '&raquo;', title: 'last', value: null }
 			},
 			{
 				key: 'Text',
@@ -815,12 +777,13 @@ function (
 		pager3.render($("#pager3"));
 
 		//#endregion
+		*/
 
-		//#endregion
+        //#endregion
 
-		return this;
-	};
+        return this;
+    };
 
-	/// <summary> Instantiate viewModel </summary>
-	return new viewModel();
+    /// <summary> Instantiate viewModel </summary>
+    return new viewModel();
 });

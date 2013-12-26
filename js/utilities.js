@@ -73,13 +73,13 @@ function(
 		/**
 		* Private property to hold all objects type
 		*/
-		//var oType = {};
-		//(function () {
-		//	var _oJSObjects = "Boolean Number String Function Array Date RegExp Object NodeList".split(" "), index = 0;
-		//	for (; index < _oJSObjects.length; index++) {
-		//		oType["[object " + _oJSObjects[index] + "]"] = _oJSObjects[index].toLowerCase();
-		//	}
-		//})();
+		var oType = {};
+		(function () {
+			var _oJSObjects = "Boolean Number String Function Array Date RegExp Object NodeList".split(" "), index = 0;
+			for (; index < _oJSObjects.length; index++) {
+				oType["[object " + _oJSObjects[index] + "]"] = _oJSObjects[index].toLowerCase();
+			}
+		})();
 	
 		/**
 		* Public method to get the type of object
@@ -275,6 +275,30 @@ function(
 			if (self.isString(oInputValue)) {
 				return oInputValue;
 			}
+		};
+
+		/**
+		* Join an object to string form with quotes around values
+		* @param: oInputObject, keyGlue, pairGlue
+		* @returns: return string for given object
+		*/
+		self.joinKeyValuePairWithQuotes = function (oInputObject, keyGlue, pairGlue) {
+			var stringTemplate = '{ initialTemplate }',
+				stringifiedObject = '';
+
+			for (var key in oInputObject) {
+				if (oInputObject.hasOwnProperty(key)) {
+					if (stringifiedObject === '') {
+						stringifiedObject = key + keyGlue + '&apos;' + oInputObject[key] + '&apos;';
+					} else {
+						stringifiedObject = stringifiedObject + pairGlue + key + keyGlue + '&apos;' + oInputObject[key] + '&apos;';
+					}
+				}
+			}
+
+			stringTemplate = stringTemplate.replace('initialTemplate', stringifiedObject);
+			
+			return stringTemplate;
 		};
 
 		/** 

@@ -95,7 +95,7 @@
     <Content Include="img\Warning-large.png" />
     <Content Include="img\Warning.png" />
     <Content Include="js\app.js" />
-    <Content Include="js\KnockoutUtilities.js" />
+    <Content Include="js\knockoutUtilities.js" />
     <Content Include="js\modules\Grid.ColFormatter.js" />
     <Content Include="js\modules\Grid.DataHandler.js" />
     <Content Include="js\modules\Grid.Drilldown.js" />
@@ -126,6 +126,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
