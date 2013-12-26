@@ -111,15 +111,12 @@ function (
             ]),
             data: ko.observableArray([])
         };
-
-
-        /// <summary> Call grid pager constructor </summary>
-        var pager = new gridPager();
-
+        
         var pagerConfig1 = {
             pageSize: 2,
             pageOptions: [1, 2, 5, 10, 20, 50, 100],
             numberOfLinks: 5,
+            currentPage: 1,
             totalRecords: table1.responseData().length,
             template: gridPager.pagerTemplates.basicTemplate,
             overrideConfig: {
@@ -130,30 +127,20 @@ function (
                 }
             },
             /// <summary> Override event handler and slice data on change </summary>
-            onChange: function () {
-                //// Slice grid data based on initial pager configurations
-                var paginatedData1 = utilities.slicePageData(table1.responseData(), 1, 2);
+            onChange: function (config) {
+                // Slice grid data based on initial pager configurations
+                var paginatedData1 = utilities.slicePageData(table1.responseData(), config.currentPage, config.pageSize);
                 table1.data(paginatedData1);
             }
         }
+
+        /// <summary> Initialize and Render pager for the grid </summary>
+        var pager = new gridPager(pagerConfig1).render( $("#pager1"));
 
         /// <summary> Render grid </summary>
         var tableObj1 = new grid({
             data: table1
         }).render($("#example"));
-
-        /// <summary> Initialize and Render pager for the grid  <summary>
-        pager.render(pagerConfig1, $("#pager1"));
-
-        var oPagerConfig1 = pager.oPagerConfig;
-
-        pager.getPagerConfig();
-
-        pagerConfig1.onChange(function () {
-            //// Slice grid data based on initial pager configurations
-            var paginatedData1 = utilities.slicePageData(table1.responseData(), 1, 2);
-            table1.data(paginatedData1);
-        });
 
         //#endregion
 

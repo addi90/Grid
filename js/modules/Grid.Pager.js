@@ -16,52 +16,53 @@ function (
     /// <summary> Static variable holding unique id of the pager </summary>
     var pagerId = 1;
 
+    // <summary Page object for number links </summary>
+    var PageObjectNumbers = function (oCurrentPage) {
+        this.htmlFormat = oCurrentPage + 1;
+        this.title = oCurrentPage + 1;
+        this.value = oCurrentPage + 1;
+    };
+
+    // <summary Page object </summary>
+    var PageObject = function (currentPageObject) {
+        this.htmlFormat = currentPageObject.htmlFormat;
+        this.title = currentPageObject.title;
+        this.value = currentPageObject.value;
+    };
+
     /**
 	* Grid Pager
 	* @param: Pager configurations
 	* @returns: Pager function for grid pagers
 	* <summary> Implementation for grid pager </summary>
 	*/
-    function GridPager() {
+    function GridPager(config) {
 
         //#region (Private) Properties and functions
 
-        // <summary Page object for number links </summary>
-        var PageObjectNumbers = function (oCurrentPage) {
-            this.htmlFormat = oCurrentPage + 1;
-            this.title = oCurrentPage + 1;
-            this.value = oCurrentPage + 1;
-        };
+        var gridPager = this;
 
-        // <summary Page object </summary>
-        var PageObject = function (currentPageObject) {
-            this.htmlFormat = currentPageObject.htmlFormat;
-            this.title = currentPageObject.title;
-            this.value = currentPageObject.value;
+        // <summary> Pager configuration </summary>
+        var pagerConfig = {
+            // Event handler for pager changes 
+            onChange : $.noop
         };
 
         // Id for current pager
         var Id = ++pagerId;
 
-        var gridPager = this;
-        var pagerConfig;
-        var pagerHtml =
-				"<section class='grid-pager'>" +
-				   "{pagerTemplatePlaceHolder}" +
-				"</section>";
-
-        /// <summary> Event for page click </summary
-        var onChange = $.noop;
+        // <summary> Extend pager configuration </summary>
+        pagerConfig = $.extend(pagerConfig, config);
 
         //#endregion
 
         //#region (Public) Initial properties and methods
 
         // <summary Initialize pager properties and render </summary
-        gridPager.render = function (config, elementSelector) {
-            pagerConfig = config;
+        gridPager.render = function (elementSelector) {
             var pagerTemplate = '',
-				configObject;
+				configObject,
+                pagerHtml = "<section class='grid-pager'>{pagerTemplatePlaceHolder}</section>";
 
             // Check if pager template is passed or custom user configuration is passed
             if (pagerConfig.hasOwnProperty('template') && !!pagerConfig.template) {
@@ -93,6 +94,7 @@ function (
             elementSelector[0].innerHTML += pagerHtml;
             ko.applyBindings(pager, elementSelector[0]);
 
+            return this;
         };
 
         //#endregion
@@ -283,9 +285,19 @@ function (
 
         // Pager configuration to be exposed
         var oPagerConfig = {
-            currentPage: pager.currentPage(),
-            pageSize: pager.pageSize()
+            currentPage: 1,
+            pageSize: 0
         };
+
+        // Subscribe to current page changes
+        pager.currentPage.subscribe(function (newValue) {
+            oPagerConfig.currentPage = newValue;
+        });
+
+        // Subscribe to page sizechanges
+        pager.pageSize.subscribe(function (newValue) {
+            oPagerConfig.pageSize = newValue;
+        });
 
         //#endregion
 
@@ -476,7 +488,7 @@ function (
             }
 
             // Trigger event onChange
-            onChange();
+            pagerConfig.onChange(oPagerConfig);
         };
 
         /// <summary> Handle Previous pages click </summary>
@@ -499,7 +511,7 @@ function (
             }
 
             // Trigger event onChange
-            onChange();
+            pagerConfig.onChange(oPagerConfig);
         };
 
         /// <summary> Handle page click </summary
@@ -572,7 +584,7 @@ function (
             setCurrentPage(oCurrentPage);
 
             // Trigger event onChange
-            onChange();
+            pagerConfig.onChange(oPagerConfig);
         };
 
         /// <summary> Handle drop down change </summary
@@ -586,7 +598,7 @@ function (
             pager.previousPages.visible(false);
 
             // Trigger event onChange
-            onChange();
+            pagerConfig.onChange(oPagerConfig);
         };
 
         //#endregion
