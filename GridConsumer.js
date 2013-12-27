@@ -158,7 +158,7 @@ function (
 				'Index',
 				{
 					label: 'Name', formatter: function () {
-						return "<a href='#' data-bind='text: {value}, attr: { href: &apos;#&apos; + {value} }'></a>"
+						return "<a href='#' data-bind='text: {value}'></a>"
 					}
 				},
 				{

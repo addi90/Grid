@@ -138,7 +138,7 @@ function (
 
 					// Check if 'allowHTML' property exist for column in user configuration 
 					// And call the handler for the same to get cell values
-					if (column.hasOwnProperty('allowHTML')) {
+					if (column.hasOwnProperty('formatter')) {
 						// Get formatted data for current column
 						_getFormattedCellHtml(column.id);
 					}
