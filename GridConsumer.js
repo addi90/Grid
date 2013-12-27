@@ -13,29 +13,29 @@ function (
 	grid,
 	gridPager,
 	utilities) {
-    "use strict";
+	"use strict";
 
-    /**
+	/**
 	* Grid consumer
 	* @param: null
 	* @returns: view model object for grid consumer
 	* <summary> Other details </summary>
 	*/
-    function viewModel() {
+	function viewModel() {
 
-        var self = this;
+		var self = this;
 
-        //#region Create grid
+		//#region Create grid
 
-        //#region Table1
+		//#region Table1
 
-        /// <summary> Assign grid properties and data </summary>
-        var table1 = {
-            caption: "new table caption",
-            isExpanded: ko.observable(true),
-            sortColumn: ko.observable('C0'),
-            sortOrder: ko.observable('asc'),
-            columns: [
+		/// <summary> Assign grid properties and data </summary>
+		var table1 = {
+			caption: "new table caption",
+			isExpanded: ko.observable(true),
+			sortColumn: ko.observable('C0'),
+			sortOrder: ko.observable('asc'),
+			columns: [
 				{ label: 'Inv No', id: 'C0', spanWidth: 'span2', sortable: true },
 				{ label: 'Date', id: 'C1', spanWidth: 'span2', sortable: true },
 				{ label: 'Client', id: 'C2', spanWidth: 'span4', sortable: true },
@@ -43,439 +43,107 @@ function (
 				{ label: 'Tax', id: 'C4', spanWidth: 'span2', sortable: false },
 				{ label: 'Total', id: 'C5', spanWidth: 'span2', sortable: true },
 				{ label: 'Notes', id: 'C6', spanWidth: 'span6', sortable: false }
-            ],
-            responseData: ko.observableArray([
-						{
-						    "C0": 0,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 1,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 2,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 3,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 4,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 5,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						},
-						{
-						    "C0": 6,
-						    "C1": "1999-12-02",
-						    "C2": "Zorromop",
-						    "C3": "$3,502.00",
-						    "C4": "$340.00",
-						    "C5": "$1,338.00",
-						    "C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
-						}
-            ]),
-            data: ko.observableArray([])
-        };
-        
-        var pagerConfig1 = {
-            pageSize: 2,
-            pageOptions: [1, 2, 5, 10, 20, 50, 100],
-            numberOfLinks: 5,
-            currentPage: 1,
-            totalRecords: table1.responseData().length,
-            template: gridPager.pagerTemplates.basicTemplate,
-            overrideConfig: {
-                firstPage: {
-                    value: {
-
-                    }
-                }
-            },
-            /// <summary> Override event handler and slice data on change </summary>
-            onChange: function (config) {
-                // Slice grid data based on initial pager configurations
-                var paginatedData1 = utilities.slicePageData(table1.responseData(), config.currentPage, config.pageSize);
-                table1.data(paginatedData1);
-            }
-        }
-
-        /// <summary> Initialize and Render pager for the grid </summary>
-        var pager = new gridPager(pagerConfig1).render( $("#pager1"));
-
-        /// <summary> Render grid </summary>
-        var tableObj1 = new grid({
-            data: table1
-        }).render($("#example"));
-
-        //#endregion
-
-        /*
-		//#region Table2
-
-		/// <summary> Assign grid properties and data </summary>
-		var table2 = {
-			caption: "new table caption 2",
-			isExpanded: ko.observable(true),
-			sortColumn: ko.observable('C2'),
-			sortOrder: ko.observable('asc'),
-			columns: [
-				{ label: 'Contact Name', id: 'C2', spanWidth: 'span3', sortable: true },
-				{ label: 'Contact title', id: 'C3', spanWidth: 'span3', sortable: true },
-				{ label: 'Company Name', id: 'C4', spanWidth: 'span3', sortable: false },
-				{ label: 'Country', id: 'C5', spanWidth: 'span3', sortable: true },
 			],
 			responseData: ko.observableArray([
-					{
-						"C1": 0,
-						"C2": "Carissa Lancaster",
-						"C3": "Owner",
-						"C4": "Infotrips",
-						"C5": "Nigeria"
-					},
-					{
-						"C1": 1,
-						"C2": "Potts Riley",
-						"C3": "Owner",
-						"C4": "Comdom",
-						"C5": "Thailand"
-					},
-					{
-						"C1": 2,
-						"C2": "Lora Dillon",
-						"C3": "Marketing Manager",
-						"C4": "Blanet",
-						"C5": "Grenada"
-					},
-					{
-						"C1": 3,
-						"C2": "Munoz Mcclure",
-						"C3": "Operations Manager",
-						"C4": "Sultraxin",
-						"C5": "Lithuania"
-					},
-					{
-						"C1": 4,
-						"C2": "Barron Odom",
-						"C3": "Marketing Manager",
-						"C4": "Qualitex",
-						"C5": "Montserrat"
-					},
-					{
-						"C1": 5,
-						"C2": "Jessie Christian",
-						"C3": "Operations Manager",
-						"C4": "Trollery",
-						"C5": "Palestine"
-					},
-					{
-						"C1": 6,
-						"C2": "Rachelle Morton",
-						"C3": "Marketing Manager",
-						"C4": "Medcom",
-						"C5": "Antigua &amp; Barbuda"
-					},
-					{
-						"C1": 7,
-						"C2": "Shannon Boyd",
-						"C3": "Order Administrator",
-						"C4": "Cowtown",
-						"C5": "Mongolia"
-					},
-					{
-						"C1": 8,
-						"C2": "Juarez Parsons",
-						"C3": "Order Administrator",
-						"C4": "Viasia",
-						"C5": "Israel"
-					},
-					{
-						"C1": 9,
-						"C2": "Kelley Dickson",
-						"C3": "Operations Manager",
-						"C4": "Corpulse",
-						"C5": "Namibia"
-					},
-					{
-						"C1": 10,
-						"C2": "Clarke Cotton",
-						"C3": "Marketing Manager",
-						"C4": "Marvane",
-						"C5": "Qatar"
-					},
-					{
-						"C1": 11,
-						"C2": "Combs Gilmore",
-						"C3": "Owner",
-						"C4": "Macronaut",
-						"C5": "Syria"
-					},
-					{
-						"C1": 12,
-						"C2": "Conley Carpenter",
-						"C3": "Operations Manager",
-						"C4": "Kindaloo",
-						"C5": "China"
-					},
-					{
-						"C1": 13,
-						"C2": "May Matthews",
-						"C3": "Operations Manager",
-						"C4": "Geekfarm",
-						"C5": "Malta"
-					},
-					{
-						"C1": 14,
-						"C2": "Dickson Harding",
-						"C3": "Owner",
-						"C4": "Sportan",
-						"C5": "Timor L'Este"
-					},
-					{
-						"C1": 15,
-						"C2": "Good Stevens",
-						"C3": "Owner",
-						"C4": "Plutorque",
-						"C5": "British Virgin Islands"
-					},
-					{
-						"C1": 16,
-						"C2": "Kirby Rosales",
-						"C3": "Operations Manager",
-						"C4": "Sentia",
-						"C5": "Costa Rica"
-					},
-					{
-						"C1": 17,
-						"C2": "Valencia Bradley",
-						"C3": "Marketing Manager",
-						"C4": "Supremia",
-						"C5": "Spain"
-					},
-					{
-						"C1": 18,
-						"C2": "Coleen Irwin",
-						"C3": "Marketing Manager",
-						"C4": "Navir",
-						"C5": "Oman"
-					},
-					{
-						"C1": 19,
-						"C2": "Jenifer Carson",
-						"C3": "Order Administrator",
-						"C4": "Comtent",
-						"C5": "Kenya"
-					},
-					{
-						"C1": 20,
-						"C2": "Strickland Peck",
-						"C3": "Marketing Manager",
-						"C4": "Pyramia",
-						"C5": "New Caledonia"
-					},
-					{
-						"C1": 21,
-						"C2": "Foley Roth",
-						"C3": "Owner",
-						"C4": "Zilladyne",
-						"C5": "Dominica"
-					},
-					{
-						"C1": 22,
-						"C2": "Bright Kelly",
-						"C3": "Order Administrator",
-						"C4": "Isologica",
-						"C5": "Laos"
-					},
-					{
-						"C1": 23,
-						"C2": "Cotton Prince",
-						"C3": "Operations Manager",
-						"C4": "Bostonic",
-						"C5": "Algeria"
-					},
-					{
-						"C1": 24,
-						"C2": "Faye Walsh",
-						"C3": "Operations Manager",
-						"C4": "Gorganic",
-						"C5": "Andorra"
-					},
-					{
-						"C1": 25,
-						"C2": "Joyce Pacheco",
-						"C3": "Operations Manager",
-						"C4": "Quarex",
-						"C5": "Russia"
-					},
-					{
-						"C1": 26,
-						"C2": "Webb Guy",
-						"C3": "Owner",
-						"C4": "Zaggles",
-						"C5": "Estonia"
-					},
-					{
-						"C1": 27,
-						"C2": "Nellie Higgins",
-						"C3": "Operations Manager",
-						"C4": "Applidec",
-						"C5": "Greenland"
-					},
-					{
-						"C1": 28,
-						"C2": "Kristen Bright",
-						"C3": "Owner",
-						"C4": "Securia",
-						"C5": "Barbados"
-					},
-					{
-						"C1": 29,
-						"C2": "Mai Roberts",
-						"C3": "Operations Manager",
-						"C4": "Isologix",
-						"C5": "Tajikistan"
-					},
-					{
-						"C1": 30,
-						"C2": "Deborah Steele",
-						"C3": "Marketing Manager",
-						"C4": "Enervate",
-						"C5": "Virgin Islands (US)"
-					},
-					{
-						"C1": 31,
-						"C2": "Deborah Steele",
-						"C3": "Marketing Manager",
-						"C4": "Enervate",
-						"C5": "Virgin Islands (US)"
-					}
+						{
+							"C0": 0,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 1,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 2,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 3,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 4,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 5,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						},
+						{
+							"C0": 6,
+							"C1": "1999-12-02",
+							"C2": "Zorromop",
+							"C3": "$3,502.00",
+							"C4": "$340.00",
+							"C5": "$1,338.00",
+							"C6": "Culpa anim adipisicing ad et officia eu laborum eu adipisicing consectetur. Velit dolor ut consequat ullamco eu mollit minim ad officia ea elit. Mollit nulla incididunt sunt nostrud. Culpa culpa dolor amet elit dolor.\r\n"
+						}
 			]),
 			data: ko.observableArray([])
-		}
+		};
+		
+		var pagerConfig1 = {
+			pageSize: 2,
+			pageOptions: [1, 2, 5, 10, 20, 50, 100],
+			numberOfLinks: 5,
+			currentPage: 1,
+			totalRecords: table1.responseData().length,
+			template: gridPager.pagerTemplates.basicTemplate,
+			overrideConfig: {
+				firstPage: {
+					value: {
 
-		/// <summary> Render grid </summary>
-		var tableObj2 = new grid({
-			data: table2
-		}).render($("#example2"));
-
-		var pagerConfig2 = [
-			{
-				key: 'FirstPage',
-				value: { htmlFormat: '&laquo;', title: 'first', value: 1 }
-			},
-			{
-				key: 'PreviousPage',
-				value: { htmlFormat: '&lt;', title: 'previous', value: null }
-			},
-			{
-				key: 'PageNumbers',
-				value: []
-			},
-			{
-				key: 'NextPage',
-				value: { htmlFormat: '&gt;', title: 'next', value: null }
-			},
-			{
-				key: 'LastPage',
-				value: { htmlFormat: '&raquo;', title: 'last', value: null }
-			},
-			{
-				key: 'Text',
-				value: 'Page Size'
-			},
-			{
-				key: 'PageSizeOptions',
-				value: {
-					options: [1, 2, 5, 10, 20, 30, 50],
-					selectedValue: 10
+					}
 				}
 			},
-			{
-				key: 'Text',
-				value: 'Showing page'
-			},
-			{
-				key: 'CurrentPage',
-				value: 1
-			},
-			{
-				key: 'Text',
-				value: 'of'
-			},
-			{
-				key: 'TotalPages',
-				value: 0
-			},
-			{
-				key: 'Text',
-				value: 'for'
-			},
-			{
-				key: 'TotalRecords',
-				value: table2.responseData().length
-			},
-			{
-				key: 'Text',
-				value: 'records'
+			/// <summary> Override event handler and slice data on change </summary>
+			onChange: function (config) {
+				// Slice grid data based on initial pager configurations
+				var paginatedData1 = utilities.slicePageData(table1.responseData(), config.currentPage, config.pageSize);
+				table1.data(paginatedData1);
 			}
-		];
-
-		/// <summary> Call grid pager constructor </summary>
-		var pager2 = new gridPager({
-			config: pagerConfig2
-		});
-
-		var oPagerConfig2 = pager2.oPagerConfig;
-
-		// Slice grid data based on initial pager configurations
-		var paginatedData3 = utilities.slicePageData(table2.responseData(), oPagerConfig2.CurrentPage(), oPagerConfig2.PageSize());
-		table2.data(paginatedData3);
-
-		/// <summary> Override event handler and slice data on change </summary>
-		var originalOnChange2 = pager2.onChange;
-		pager2.onChange = function () {
-			var paginatedData4 = utilities.slicePageData(table2.responseData(), oPagerConfig2.CurrentPage(), oPagerConfig2.PageSize())
-			table2.data(paginatedData4);
-			originalOnChange2()
 		}
 
-		/// <summary> Render pager for the grid  <summary>
-		pager2.render($("#pager2"));
+		/// <summary> Initialize and Render pager for the grid </summary>
+		var pager = new gridPager(pagerConfig1).render( $("#pager1"));
+
+	    // Initialise data for first time before rendering grid
+		pagerConfig1.onChange({currentPage: 1, pageSize: 2});
+
+		/// <summary> Render grid </summary>
+		var tableObj1 = new grid({
+			data: table1
+		}).render($("#example"));
 
 		//#endregion
 
@@ -674,103 +342,46 @@ function (
 			data: ko.observableArray([])
 		}
 
-		/// <summary> Render grid </summary>
-		var tableObj3 = new grid({
-			data: table3
-		}).render($("#example3"));
+		var pagerConfig3 = {
+			pageSize: 2,
+			pageOptions: [1, 2, 5, 10, 20, 50, 100],
+			numberOfLinks: 10,
+			currentPage: 1,
+			totalRecords: table3.responseData().length,
+			template: gridPager.pagerTemplates.basicTemplate,
+			overrideConfig: {
+				firstPage: {
+					value: {
 
-		var pagerConfig3 = [
-			{
-				key: 'FirstPage',
-				value: { htmlFormat: '&laquo;', title: 'first', value: 1 }
-			},
-			{
-				key: 'PreviousPage',
-				value: { htmlFormat: '&lt;', title: 'previous', value: null }
-			},
-			{
-				key: 'PageNumbers',
-				value: []
-			},
-			{
-				key: 'NextPage',
-				value: { htmlFormat: '&gt;', title: 'next', value: null }
-			},
-			{
-				key: 'LastPage',
-				value: { htmlFormat: '&raquo;', title: 'last', value: null }
-			},
-			{
-				key: 'Text',
-				value: 'Page Size'
-			},
-			{
-				key: 'PageSizeOptions',
-				value: {
-					options: [1, 2, 5, 10, 20, 30, 50],
-					selectedValue: 10
+					}
 				}
 			},
-			{
-				key: 'Text',
-				value: 'Showing page'
-			},
-			{
-				key: 'CurrentPage',
-				value: 1
-			},
-			{
-				key: 'Text',
-				value: 'of'
-			},
-			{
-				key: 'TotalPages',
-				value: 0
-			},
-			{
-				key: 'Text',
-				value: 'for'
-			},
-			{
-				key: 'TotalRecords',
-				value: table3.responseData().length
-			},
-			{
-				key: 'Text',
-				value: 'records'
+			/// <summary> Override event handler and slice data on change </summary>
+			onChange: function (config) {
+				// Slice grid data based on initial pager configurations
+				var paginatedData = utilities.slicePageData(table3.responseData(), config.currentPage, config.pageSize);
+				table3.data(paginatedData);
 			}
-		];
-
-		/// <summary> Call grid pager constructor </summary>
-		var pager3 = new gridPager({
-			config: pagerConfig3
-		});
-
-		var oPagerConfig3 = pager3.oPagerConfig;
-
-		// Slice grid data based on initial pager configurations
-		var paginatedData5 = utilities.slicePageData(table3.responseData(), oPagerConfig3.CurrentPage(), oPagerConfig3.PageSize());
-		table3.data(paginatedData5);
-
-		/// <summary> Override event handler and slice data on change </summary>
-		var originalOnChange3 = pager3.onChange;
-		pager3.onChange = function () {
-			var paginatedData6 = utilities.slicePageData(table3.responseData(), oPagerConfig3.CurrentPage(), oPagerConfig3.PageSize())
-			table3.data(paginatedData6);
-			originalOnChange3()
 		}
 
-		/// <summary> Render pager for the grid  <summary>
-		pager3.render($("#pager3"));
+		/// <summary> Initialize Render pager for the grid </summary>
+		var pager3 = new gridPager(pagerConfig3).render($("#pager3"));
+
+	    // Initialise data for first time
+		pagerConfig3.onChange({ currentPage: 1, pageSize: 2 });
+
+	    /// <summary> Render grid </summary>
+		var tableObj3 = new grid({
+		    data: table3
+		}).render($("#example3"));
 
 		//#endregion
-		*/
 
-        //#endregion
+		//#endregion
 
-        return this;
-    };
+		return this;
+	};
 
-    /// <summary> Instantiate viewModel </summary>
-    return new viewModel();
+	/// <summary> Instantiate viewModel </summary>
+	return new viewModel();
 });

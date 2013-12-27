@@ -13,22 +13,12 @@ function (
 	KnockoutUtilities) {
     "use strict";
 
+    //#region (Private) Global variable
+
     /// <summary> Static variable holding unique id of the pager </summary>
-    var pagerId = 1;
+    var pagerId = 0;
 
-    // <summary Page object for number links </summary>
-    var PageObjectNumbers = function (oCurrentPage) {
-        this.htmlFormat = oCurrentPage + 1;
-        this.title = oCurrentPage + 1;
-        this.value = oCurrentPage + 1;
-    };
-
-    // <summary Page object </summary>
-    var PageObject = function (currentPageObject) {
-        this.htmlFormat = currentPageObject.htmlFormat;
-        this.title = currentPageObject.title;
-        this.value = currentPageObject.value;
-    };
+    //#endregion
 
     /**
 	* Grid Pager
@@ -36,23 +26,35 @@ function (
 	* @returns: Pager function for grid pagers
 	* <summary> Implementation for grid pager </summary>
 	*/
-    function GridPager(config) {
+    function Pager(config) {
 
-        //#region (Private) Properties and functions
+        //#region (Private) Properties and methods
 
-        var gridPager = this;
-
-        // <summary> Pager configuration </summary>
-        var pagerConfig = {
-            // Event handler for pager changes 
-            onChange : $.noop
-        };
-
-        // Id for current pager
-        var Id = ++pagerId;
+        var gridPager = this,
+            // <summary> Pager configuration </summary>
+            pagerConfig = {
+                // Event handler for pager changes 
+                onChange: $.noop
+            },
+            // Id for current pager
+            Id = ++pagerId;
 
         // <summary> Extend pager configuration </summary>
         pagerConfig = $.extend(pagerConfig, config);
+
+        // <summary Page object for number links </summary>
+        var PageObjectNumbers = function (oCurrentPage) {
+            this.htmlFormat = oCurrentPage + 1;
+            this.title = oCurrentPage + 1;
+            this.value = oCurrentPage + 1;
+        };
+
+        // <summary Page object </summary>
+        var PageObject = function (currentPageObject) {
+            this.htmlFormat = currentPageObject.htmlFormat;
+            this.title = currentPageObject.title;
+            this.value = currentPageObject.value;
+        };
 
         //#endregion
 
@@ -101,35 +103,35 @@ function (
 
         //#region (Private) Pager object to be rendered
 
-        /// <summary> Private object with all pager properties required for internnal logic</summary>
+        /// <summary> Private object with all pager properties required for internal logic</summary>
         var pager = new (function () {
             var self = this;
             // Total no of records in current grid
-            this.totalRecords = ko.observable(50),
+            this.totalRecords = ko.observable(50);
             // Total no of page links to be shown at a time
-			this.numberOfLinks = ko.observable(10),
+			this.numberOfLinks = ko.observable(10);
             // Store position of first page in current shown pages for finding previous pages using (...) links
             // and visibilty of (...) link
 			this.previousPages = {
 			    index: ko.observable(1),
 			    visible: ko.observable(false)
-			},
+			};
             // Store position of last page in current shown pages for finding next pages using (...) links
             // and visibilty of (...) link
 			this.nextPages = {
 			    index: ko.observable(self.numberOfLinks()),
 			    visible: ko.observable(false)
-			},
+			};
             // Page size options for dropdown values
-			this.pageOptions = [],
+			this.pageOptions = [];
             // Current page size selected from dropdown
-			this.pageSize = ko.observable(10),
+			this.pageSize = ko.observable(10);
             // Find total no of pages based on Total no of records and current page size 
 			this.totalPages = ko.computed({
 			    read: function () {
 			        return Math.ceil(self.totalRecords() / self.pageSize());
 			    }
-			}),
+			});
             // First page of all the pages
 			this.firstPage = new PageObject({
 			    htmlFormat: '&laquo;',
@@ -283,7 +285,7 @@ function (
             }
         };
 
-        // Pager configuration to be exposed
+        /// <summary> Pager configuration to be exposed </summary>
         var oPagerConfig = {
             currentPage: 1,
             pageSize: 0
@@ -303,31 +305,43 @@ function (
 
         //#region (Private) Html generating methods
 
+        /// <summary> Append attribute to html template </summary>
+        var appendAttributeToHtml = function (template, attrObject) {
+            var attrTemplate = '';
+
+            // Assign attribute
+            if (!!attrObject && !!attrObject.attr) {
+                attrTemplate = "attr: {attribute}";
+
+                // Get stringified object
+                var attrString = utilities.joinKeyValuePairWithQuotes(attrObject.attr, ':', ',');
+                attrTemplate = attrTemplate.replace('{attribute}', attrString);
+            }
+
+            template = template.replace('{attributePlaceHolder}', attrTemplate);
+
+            return template;
+        };
+
         /// <summary> Generate  html for text content </summary>
         var getTextHTML = function (textObject) {
 
-            var strTemplate = "<span class='pager-text' {stylePlaceHolder}>{inputValue}</span>";
-            var styleTemplate;
+            var strTemplate = "<span class='pager-text' data-bind='{attributePlaceHolder}'>{inputValue}</span>";
 
-            if (!!textObject && !!textObject.attr) {
-                styleTemplate = "data-bind='attr: {textStyleAttribute}'";
+            // Append if attribute is to be appended
+            strTemplate = appendAttributeToHtml(strTemplate, textObject);
 
-                // Get stringified object
-                var attrString = utilities.joinKeyValuePairWithQuotes(textObject.attr, ':', ',');
-                styleTemplate = styleTemplate.replace('{textStyleAttribute}', attrString);
-            } else {
-                styleTemplate = '';
-            }
-
-            strTemplate = strTemplate.replace('{stylePlaceHolder}', styleTemplate);
             return strTemplate.replace('{inputValue}', textObject.value);
         };
 
         /// <summary> Generate  html for dropdown content </summary>
         var getDropDownHTML = function (dropDownObject) {
-            var dropDownTemplate = "<select class='pager-dropdown' data-bind='options: pageOptions, " +
+            var dropDownTemplate = "<select class='pager-dropdown' data-bind='{attributePlaceHolder}, options: pageOptions, " +
 																			"value: pageSize, " +
 																			"event: { change: handleDropDownChange }'></select>";
+
+            // Append if attribute is to be appended
+            dropDownTemplate = appendAttributeToHtml(dropDownTemplate, dropDownObject);
 
             // Set default page size
             var defaultPageSize = (!!pagerConfig && !!pagerConfig.pageSize) ? parseInt(pagerConfig.pageSize, 10) : 10;
@@ -342,7 +356,7 @@ function (
 
         /// <summary> Generate  html for textbox content </summary>
         var getTextBoxHTML = function (currentPageObject) {
-            var textboxTemplate = "<input class='pager-textbox' type='text' data-bind='value: currentPage," +
+            var textboxTemplate = "<input class='pager-textbox' type='text' data-bind='{attributePlaceHolder}, value: currentPage," +
 																			"event: { blur: handleChange.bind($data, currentPageObject()) }'></input>";
 
             var currentPageNumber = parseInt(!!currentPageObject && !!currentPageObject.value ?
@@ -351,29 +365,39 @@ function (
 
             pager.currentPage(currentPageNumber);
 
+            // Append if attribute is to be appended
+            textboxTemplate = appendAttributeToHtml(textboxTemplate, currentPageObject);
+
             return textboxTemplate;
         };
 
         /// <summary> Generate  html for total records</summary>
         var getTotalRecordsHTML = function (totalRecordsObject) {
-            var totalRecordsTemplate = "<span class='pager-text' data-bind='text: totalRecords'></span>";
+            var totalRecordsTemplate = "<span class='pager-text' data-bind='{attributePlaceHolder}, text: totalRecords'></span>";
 
             var totalGridRecords = (!!pagerConfig && !!pagerConfig.totalRecords) ? parseInt(pagerConfig.totalRecords, 10) : 0;
 
             pager.totalRecords(totalGridRecords);
+
+            // Append if attribute is to be appended
+            totalRecordsTemplate = appendAttributeToHtml(totalRecordsTemplate, totalRecordsObject);
+
             return totalRecordsTemplate;
         };
 
         /// <summary> Generate  html for total pages</summary>
-        var getTotalPagesHTML = function (value) {
-            var totalPagesTemplate = "<span class='pager-text' data-bind='text: totalPages'></span>";
+        var getTotalPagesHTML = function (totalPagesObject) {
+            var totalPagesTemplate = "<span class='pager-text' data-bind='{attributePlaceHolder}, text: totalPages'></span>";
+
+            // Append if attribute is to be appended
+            totalPagesTemplate = appendAttributeToHtml(totalPagesTemplate, totalPagesObject);
 
             return totalPagesTemplate;
         };
 
         /// <summary> Generate  html for navigating to next pages (...)</summary>
-        var getNextPagesLink = function (value) {
-            var nextPageslink =
+        var getNextPagesLink = function (nextPagesObject) {
+            var nextPagesLinkTemplate =
 					"<li>" +
 						"<a href='#' data-bind='text: &apos;...&apos;," +
 												"visible: nextPages.visible()," +
@@ -382,7 +406,8 @@ function (
 
             var links = (!!pagerConfig && !!pagerConfig.numberOfLinks) ? parseInt(pagerConfig.numberOfLinks, 10) : 10;
             pager.numberOfLinks(links);
-            return nextPageslink;
+
+            return nextPagesLinkTemplate;
         };
 
         /// <summary> Generate  html for navigating to previous pages (...)</summary>
@@ -419,49 +444,62 @@ function (
         };
 
         /// <summary> Generate  html for first page </summary>
-        var getFirstLinkHTML = function (value) {
+        var getFirstLinkHTML = function (firstLinkObject) {
             var firstLinkTemplate =
 				"<li>" +
-					"<a href='#' id='first' data-bind='htmlAndTitle: firstPage," +
+					"<a href='#' id='first' data-bind='{attributePlaceHolder}, htmlAndTitle: firstPage," +
 											"click: handleChange.bind($data, firstPage)," +
 											"disableClick: disabledFirstAndPrevious'></a>" +
 				"</li>";
+
+            // Append if attribute is to be appended
+            firstLinkTemplate = appendAttributeToHtml(firstLinkTemplate, firstLinkObject);
 
             return firstLinkTemplate;
         };
 
         /// <summary> Generate  html for previous page </summary>
-        var getPreviousLinkHTML = function (value) {
+        var getPreviousLinkHTML = function (previousLinkObject) {
             var previousLinkTemplate =
 						"<li >" +
-							"<a href='#' data-bind='htmlAndTitle: previousPage()," +
+							"<a href='#' data-bind='{attributePlaceHolder}, htmlAndTitle: previousPage()," +
 													"click: handleChange.bind($data, previousPage())," +
 													"disableClick: disabledFirstAndPrevious'></a>" +
 						"</li>";
+
+            // Append if attribute is to be appended
+            previousLinkTemplate = appendAttributeToHtml(previousLinkTemplate, previousLinkObject);
 
             return previousLinkTemplate;
         };
 
         /// <summary> Generate  html for next page </summary>
-        var getNextLinkHTML = function (value) {
+        var getNextLinkHTML = function (nextLinkObject) {
             var nextLinkTemplate =
 						"<li>" +
-							"<a href='#' data-bind='htmlAndTitle: nextPage()," +
+							"<a href='#' data-bind='{attributePlaceHolder}, htmlAndTitle: nextPage()," +
 													"click: handleChange.bind($data, nextPage())," +
 													"disableClick: disabledNextAndLast'></a>" +
 						"</li>";
+
+            // Append if attribute is to be appended
+            nextLinkTemplate = appendAttributeToHtml(nextLinkTemplate, nextLinkObject);
 
             return nextLinkTemplate;
         };
 
         /// <summary> Generate  html for first page </summary>
-        var getLastLinkHTML = function (value) {
+        var getLastLinkHTML = function (lastLinkObject) {
             var lastLinkTemplate =
 						"<li>" +
-							"<a href='#' data-bind='htmlAndTitle: lastPage()," +
+							"<a href='#' data-bind='{attributePlaceHolder}, htmlAndTitle: lastPage()," +
 													"click: handleChange.bind($data, lastPage()), " +
 													"disableClick: disabledNextAndLast'></a>" +
 						"</li>";
+
+            // Append if attribute is to be appended
+            lastLinkTemplate = appendAttributeToHtml(lastLinkTemplate, lastLinkObject);
+
             return lastLinkTemplate;
         };
 
@@ -655,7 +693,7 @@ function (
     }
 
     /// <summary> Pager configuration templates available by default </summary>
-    GridPager.pagerTemplates = {
+    Pager.pagerTemplates = {
         basicTemplate: [
                 {
                     FirstPage: {
@@ -734,6 +772,5 @@ function (
         ]
     };
 
-    return GridPager;
-
+    return Pager;
 });
