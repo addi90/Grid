@@ -1,2 +1,0 @@
-1. Files not loading without absolute path using define(Template, knockout etc module names not working)
-2. 

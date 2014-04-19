@@ -1,6 +1,0 @@
-14. Remove _ from all the methods and use camelCase
-15. Run JSCop and JSHint
-16. MAKE ALL OBSERVABLES AS PRIVATE
-17. HAVE one method for outside access that will be used to update internal variables
-18. Use computed variables with object definition instead of function definition
-https://www.producteev.com/workspace/t/52baf8795420bc9505000000
